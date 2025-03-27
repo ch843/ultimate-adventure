@@ -1,54 +1,56 @@
-# React + TypeScript + Vite
+# Ultimate Adventure Guides Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based recreation of the Ultimate Adventure Guides website using React and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Project Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Layout Components**
+  - `Header.tsx`: Navigation header with responsive mobile menu
+  - `Footer.tsx`: Site footer with company info, links, and newsletter signup
+  - `Layout.tsx`: Main layout wrapper component
 
-## Expanding the ESLint configuration
+- **Page Components**
+  - `HomePage.tsx`: Main homepage component that assembles all sections
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Section Components**
+  - `Hero.tsx`: Main hero section with background image and call-to-action buttons
+  - `FeaturedDestinations.tsx`: Grid display of featured travel destinations
+  - `FeaturedExperiences.tsx`: Display of featured travel experiences and activities
+  - `Testimonials.tsx`: Customer testimonials section
+  - `Newsletter.tsx`: Email newsletter signup section
+  - `CallToAction.tsx`: Final call-to-action section
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Features
+
+- Fully responsive design
+- Mobile-friendly navigation
+- Component-based architecture
+- Modern, clean UI that matches the original site
+- Tailwind CSS for styling
+
+## Getting Started
+
+### Installation
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm run dev
 ```
+
+### Build
+
+```bash
+npm run build
+```
+
+## Technologies Used
+
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Vite 6
