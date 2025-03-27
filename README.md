@@ -10,7 +10,7 @@ A React-based recreation of the Ultimate Adventure Guides website using React an
   - `Layout.tsx`: Main layout wrapper component
 
 - **Page Components**
-  - `HomePage.tsx`: Main homepage component that assembles all sections
+  - `Home.tsx`: Main homepage component that assembles all sections
 
 - **Section Components**
   - `Hero.tsx`: Main hero section with background image and call-to-action buttons
