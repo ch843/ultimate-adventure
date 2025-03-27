@@ -3,8 +3,8 @@ import {Link} from 'react-router-dom';
 
 const Header: FC = () => {
     return (
-        <nav>
-            <div>
+        <nav className="bg-gray-800">
+            <div className="text-white">
                 <Link to="/">Home</Link>
             </div>
             <div>
