@@ -1,13 +1,14 @@
-import { FC } from "react";
 import Header from "./Header.tsx";
 import Footer from "./Footer";
 import {Outlet} from "react-router-dom";
 
-const Layout: FC= () => {
+const Layout = () => {
     return (
-        <div>
+        <div className="flex flex-col min-h-screen">
             <Header />
-            <Outlet />
+            <main className="flex-grow pt-[72px]">
+                <Outlet />
+            </main>
             <Footer />
         </div>
     );

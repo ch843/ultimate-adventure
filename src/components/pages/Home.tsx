@@ -1,9 +1,19 @@
-import {FC} from "react";
+import Hero from '../sections/Hero';
+import FeaturedDestinations from '../sections/FeaturedDestinations';
+import FeaturedExperiences from '../sections/FeaturedExperiences';
+import Newsletter from '../sections/Newsletter';
+import CallToAction from '../sections/CallToAction';
 
-const Home: FC = () => {
+const Home = () => {
     return (
-        <p> Home Page </p>
-    )
-}
+        <>
+            <Hero />
+            <FeaturedDestinations />
+            <FeaturedExperiences />
+            <Newsletter />
+            <CallToAction />
+        </>
+    );
+};
 
-export default Home
+export default Home;

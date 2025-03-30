@@ -1,9 +1,12 @@
-import {FC} from "react";
+import Testimonials from "../sections/Testimonials.tsx";
 
-const Reviews: FC = () => {
+
+const Reviews = () => {
     return (
-        <p> Review Page </p>
-    )
-}
+        <>
+            <Testimonials />
+        </>
+    );
+};
 
-export default Reviews
+export default Reviews;

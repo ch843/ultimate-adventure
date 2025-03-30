@@ -1,9 +1,11 @@
-import {FC} from "react";
+import Hero from '../sections/Hero';
 
-const About: FC = () => {
+const About = () => {
     return (
-        <p> About Page </p>
-    )
-}
+        <>
+            <Hero />
+        </>
+    );
+};
 
-export default About
+export default About;

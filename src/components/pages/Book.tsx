@@ -1,9 +1,11 @@
-import {FC} from "react";
+import Hero from '../sections/Hero';
 
-const Book: FC = () => {
+const Book = () => {
     return (
-        <p> Book Page </p>
-    )
-}
+        <>
+            <Hero />
+        </>
+    );
+};
 
-export default Book
+export default Book;
