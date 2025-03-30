@@ -1,4 +1,4 @@
-/* Base styles will be handled by Tailwind */
+@import 'tailwindcss';
 #root {
   width: 100%;
   min-height: 100vh;
