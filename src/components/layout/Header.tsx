@@ -11,7 +11,9 @@ const Header = () => {
             {/* Desktop Navigation */}
             <div className="container mx-auto px-4 py-5 flex justify-center items-center">
                 <nav className="hidden md:flex space-x-8 text-2xl items-center">
-                    <img src={logo} alt="Mountain Logo" className="h-fit"/>
+                    <Link to="/">
+                        <img src={logo} alt="Mountain Logo" className="h-fit"/>
+                    </Link>
                     <Link to="/" className={linkStyle}>HOME</Link>
                     <Link to="/book" className={linkStyle}>BOOK YOUR ADVENTURE</Link>
                     <Link to="/reviews" className={linkStyle}>REVIEWS</Link>

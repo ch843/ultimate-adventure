@@ -15,7 +15,7 @@ A React-based recreation of the Ultimate Adventure Guides website using React an
 - **Section Components**
   - `Hero.tsx`: Main hero section with background image and call-to-action buttons
   - `FeaturedActivities.tsx`: Grid display of featured travel destinations
-  - `FeaturedExperiences.tsx`: Display of featured travel experiences and activities
+  - `CompanyFeature.tsx`: Display of featured travel experiences and activities
   - `Testimonials.tsx`: Customer testimonials section
   - `Newsletter.tsx`: Email newsletter signup section
   - `CallToAction.tsx`: Final call-to-action section
