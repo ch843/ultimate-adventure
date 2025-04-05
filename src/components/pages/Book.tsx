@@ -1,9 +1,7 @@
-import Hero from '../sections/Hero';
-
 const Book = () => {
     return (
         <>
-            <Hero />
+           <p> Booking page </p>
         </>
     );
 };

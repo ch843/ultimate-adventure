@@ -1,9 +1,7 @@
-import Hero from '../sections/Hero';
-
 const About = () => {
     return (
         <>
-            <Hero />
+            <p>About page</p>
         </>
     );
 };
