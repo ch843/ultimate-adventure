@@ -1,6 +1,6 @@
 import Hero from '../sections/Hero';
 import FeaturedActivities from '../sections/FeaturedActivities.tsx';
-import FeaturedExperiences from '../sections/CompanyFeature.tsx';
+import CompanyFeature from '../sections/CompanyFeature.tsx';
 import Newsletter from '../sections/Newsletter';
 import CallToAction from '../sections/CallToAction';
 
@@ -9,7 +9,7 @@ const Home = () => {
         <>
             <Hero />
             <FeaturedActivities />
-            <FeaturedExperiences />
+            <CompanyFeature />
             <Newsletter />
             <CallToAction />
         </>
