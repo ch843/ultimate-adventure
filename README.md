@@ -17,7 +17,7 @@ A React-based recreation of the Ultimate Adventure Guides website using React an
   - `FeaturedActivities.tsx`: Grid display of featured travel destinations
   - `CompanyFeature.tsx`: Display of featured travel experiences and activities
   - `Testimonials.tsx`: Customer testimonials section
-  - `Newsletter.tsx`: Email newsletter signup section
+  - `ContactForm.tsx`: Email newsletter signup section
   - `CallToAction.tsx`: Final call-to-action section
 
 ## Features

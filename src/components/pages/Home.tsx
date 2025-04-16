@@ -1,8 +1,7 @@
 import Hero from '../sections/Hero';
 import FeaturedActivities from '../sections/FeaturedActivities.tsx';
 import CompanyFeature from '../sections/CompanyFeature.tsx';
-import Newsletter from '../sections/Newsletter';
-import CallToAction from '../sections/CallToAction';
+import ContactForm from '../sections/ContactForm.tsx';
 
 const Home = () => {
     return (
@@ -10,8 +9,7 @@ const Home = () => {
             <Hero />
             <FeaturedActivities />
             <CompanyFeature />
-            <Newsletter />
-            <CallToAction />
+            <ContactForm />
         </>
     );
 };
