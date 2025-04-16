@@ -12,7 +12,7 @@ const CompanyFeature = () => {
                   ABOUT US
                 </button>
           </div>
-          <div className='bg-orange-100 py-20 px-24 text-2xl font-light tracking-wide leading-loose text-center'>
+          <div className='bg-orange-100 py-14 px-14 text-2xl font-light tracking-wide leading-loose text-center'>
             With over 30 years of experience, Ultimate Adventure Guides
             is your gateway to amazing outdoor adventures. We'll help you
             create an amazing adventure based on your abilities and the kind
