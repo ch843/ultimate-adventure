@@ -7,7 +7,7 @@ type HeroProps = {
 
 const Hero = ({ imgUrl, ifMain = false, title, bannerHeight = 80 }: HeroProps) => {
     return (
-          <section className={`relative h-[${bannerHeight}vh] min-h-[500px] flex items-center`}>
+          <section className={`relative h-[${bannerHeight}vh] min-h-[600px] flex items-center`}>
           {/* Background image with overlay */}
               <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-cover bg-center bg-no-repeat brightness-48" style={{backgroundImage: `url('${imgUrl}')`}} />

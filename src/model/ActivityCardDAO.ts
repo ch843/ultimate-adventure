@@ -17,6 +17,18 @@ class _ActivityCardDAO {
     //
     // public async createActivityCard(activityId: string): Promise<void> {}
 
+    // public async getAllActivityTitles(): Promise<Array<{ title: string; card_id: string }>> {
+    //     const { data, error } = await this._client
+    //         .from('Adventure Cards')
+    //         .select('title, card_id')
+    //     if (error)  {
+    //         console.log(error);
+    //         throw error;
+    //     }
+    //     console.log('getAllActivityTypes', data);
+    //     return data;
+    // }
+
     public async getAllActivityCards(): Promise<Tables<'Adventure Cards'>[]> {
         const { data, error } = await this._client
             .from('Adventure Cards')
