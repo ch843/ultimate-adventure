@@ -160,6 +160,47 @@ export type Database = {
           },
         ]
       }
+      "Contact Form Info": {
+        Row: {
+          activity_inquiry_id: number | null
+          created_at: string
+          email: string
+          first_name: string
+          id: number
+          last_name: string
+          message: string
+          phone: string | null
+        }
+        Insert: {
+          activity_inquiry_id?: number | null
+          created_at?: string
+          email: string
+          first_name: string
+          id?: number
+          last_name: string
+          message: string
+          phone?: string | null
+        }
+        Update: {
+          activity_inquiry_id?: number | null
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: number
+          last_name?: string
+          message?: string
+          phone?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Contact Form Info_activity_inquiry_id_fkey"
+            columns: ["activity_inquiry_id"]
+            isOneToOne: false
+            referencedRelation: "Adventure Cards"
+            referencedColumns: ["card_id"]
+          },
+        ]
+      }
       Location: {
         Row: {
           location: string
