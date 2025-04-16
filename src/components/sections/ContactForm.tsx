@@ -1,20 +1,29 @@
-import { useState } from 'react';
-import { getClient } from '../../model/getClient';
+import {useEffect, useState} from 'react';
 import * as React from "react";
+import {ActivityCardDAO} from "../../model/ActivityCardDAO.ts";
+import {Tables} from "../../definitions/generatedDefinitions.ts";
+import {ContactFormInformationDAO} from "../../model/ContactFormInformationDAO.ts";
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    activityType: '',
-    message: ''
-  });
+  const [formData, setFormData] = useState<Tables<'Contact Form Info'>[]>([]);
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<null | 'success' | 'error'>(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [activities, setActivities] = useState<Tables<'Adventure Cards'>[]>([]);
+
+  useEffect(() => {
+    async function fetchActivities() {
+      try {
+        const data = await ActivityCardDAO.getAllActivityCards();
+        setActivities(data);
+      } catch (error) {
+        console.error("Error fetching activity cards:", error);
+      }
+    }
+
+    fetchActivities();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -30,36 +39,17 @@ const ContactForm = () => {
     setSubmitStatus(null);
     
     try {
-      const supabase = getClient();
-      
-      // Insert form data into 'Contact Form Information' table
-      const { error } = await supabase
-        .from('Contact Form Information')
-        .insert([
-          { 
-            first_name: formData.firstName,
-            last_name: formData.lastName,
-            email: formData.email,
-            phone: formData.phone,
-            activity_type: formData.activityType,
-            message: formData.message,
-            created_at: new Date().toISOString()
-          }
-        ]);
-      
-      if (error) {
-        console.log('Error inserting into table:', error);
-        throw error;
-      }
+      await ContactFormInformationDAO.postContactFormData({formData: formData})
       
       // Reset form on success
       setFormData({
-        firstName: '',
-        lastName: '',
+        activity_inquiry_id: 0,
+        first_name: '',
+        last_name: '',
         email: '',
         phone: '',
-        activityType: '',
-        message: ''
+        message: '',
+        created_at: ''
       });
       
       setSubmitStatus('success');
@@ -106,7 +96,7 @@ const ContactForm = () => {
                     name="firstName"
                     type="text"
                     required
-                    value={formData.firstName}
+                    value={formData.first_name}
                     onChange={handleChange}
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                   />
@@ -119,7 +109,7 @@ const ContactForm = () => {
                     name="lastName"
                     type="text"
                     required
-                    value={formData.lastName}
+                    value={formData.last_name}
                     onChange={handleChange}
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                   />
@@ -152,21 +142,18 @@ const ContactForm = () => {
               </div>
               
               <div>
-                <label htmlFor="activityType" className="block text-sm font-medium text-gray-700">Activity Type <span className="text-red-500">*</span></label>
+                <label htmlFor="activityType" className="block text-sm font-medium text-gray-700">Activity Type (Optional)</label>
                 <select
                   id="activityType"
                   name="activityType"
-                  required
-                  value={formData.activityType}
+                  value={formData.activity_inquiry_id}
                   onChange={handleChange}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                 >
-                  <option value="">Select an activity</option>
-                  <option value="climbing">Climbing</option>
-                  <option value="rafting">Rafting</option>
-                  <option value="canyoneering">Canyoneering</option>
-                  <option value="hiking">Hiking</option>
-                  <option value="other">Other</option>
+                  <option disabled value='' selected hidden />
+                  {activities.map((activity) => (
+                      <option value={activity.card_id}>{activity.title.toUpperCase()}</option>
+                  ))}
                 </select>
               </div>
               
