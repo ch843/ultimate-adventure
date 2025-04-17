@@ -1,6 +1,24 @@
 import {SupabaseClient} from "@supabase/supabase-js";
 import {getClient} from "./getClient.ts";
-import {Tables} from "../definitions/generatedDefinitions.ts";
+import {z} from "zod";
+
+export const ContactFormSchema = z.object({
+    first_name: z.string(),
+    last_name: z.string(),
+    email: z.string().email(),
+    phone: z
+        .string()
+        .min(10, { message: 'Must be a valid mobile number' })
+        .max(14, { message: 'Must be a valid mobile number' })
+        .nullable(),
+    activity_inquiry_id: z.number()
+        .min(0)
+        .nullable(),
+    message: z.string(),
+    created_at: z.string()
+})
+
+export type ContactFormToSubmit = z.infer<typeof ContactFormSchema>//Omit<Tables<'Contact Form Info'>, 'id'>
 
 //private class definition
 class _ContactFormInformationDAO {
@@ -9,16 +27,16 @@ class _ContactFormInformationDAO {
         this._client = client;
     }
 
-    public async postContactFormData({formData}: {formData: Tables<'Contact Form Info'>}) {
+    public async postContactFormData(formData: ContactFormToSubmit): Promise<void> {
         const { error } = await this._client
-            .from('Contact Form Information')
+            .from('Contact Form Info')
             .insert([
                 {
                     first_name: formData.first_name,
                     last_name: formData.last_name,
                     email: formData.email,
                     phone: formData.phone,
-                    activity_type: formData.activity_inquiry_id,
+                    activity_inquiry_id: formData.activity_inquiry_id,
                     message: formData.message,
                     created_at: new Date().toISOString()
                 }

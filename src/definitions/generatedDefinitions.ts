@@ -93,9 +93,9 @@ export type Database = {
           card_id: number
           details_id: number
           flood_danger: string | null
-          gallery_img1: string | null
-          gallery_img2: string | null
-          gallery_img3: string | null
+          gallery_img1: string | undefined
+          gallery_img2: string | undefined
+          gallery_img3: string | undefined
           gear: string | null
           hype: string | null
           length: string | null

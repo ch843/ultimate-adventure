@@ -12,11 +12,11 @@ const AdventureCard = ({ card, type }: { card: Tables<'Adventure Cards'>, type: 
                   <img
                       src={card.img_link}
                       alt={card.title}
-                      className="w-full h-48 object-cover"
+                      className="h-70 w-full object-cover"
                   />
                   <div className="p-4">
-                      <h3 className="text-3xl font tracking-wide">{card.title.toUpperCase()}</h3>
-                      <p className="text-orange-400 text-xl font-light tracking-wide">{card.location.toUpperCase()}</p>
+                      <h3 className="text-3xl font tracking-wide uppercase">{card.title}</h3>
+                      <p className="text-orange-400 text-xl font-light tracking-wide uppercase">{card.location}</p>
                       {card.price_pp && (
                           <p className="mt-2">${card.price_pp} / PERSON
                               {card.hourly && <span> / HOUR</span>}
@@ -79,7 +79,7 @@ const Book = () => {
             }
         }
         
-        fetchCards();
+        void fetchCards();
     }, []);
 
     const activityCategories = ["Canyoneering", "Climbing", "Rafting"];
@@ -88,8 +88,7 @@ const Book = () => {
         <>
             <Hero
                 imgUrl='https://ooelvqpdhbpsjsqbrljg.supabase.co/storage/v1/object/public/ultimate-adventure-prod//hikingRocks.avif'
-                title='Design your adventure'
-                bannerHeight={60}
+                title='Choose your adventure'
             />
             
             <div className="container mx-auto py-12 px-4">
@@ -99,8 +98,8 @@ const Book = () => {
                     <>
                         {activityCategories.map(category => (
                             <section key={category}>
-                                <h2 className="text-5xl font my-8 text-center">{category.toUpperCase()}</h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <h2 className="text-5xl font my-8 text-center uppercase">{category}</h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mx-20">
                                     {activityCards.map(card => (
                                         <AdventureCard key={card.card_id} card={card} type={category} />
                                     ))}

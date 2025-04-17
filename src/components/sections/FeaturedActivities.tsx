@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 interface Activity {
   id: number;
   imgPath: string;
@@ -8,19 +10,19 @@ interface Activity {
 const featuredActivities = [
     {
         id: 1,
-        imgPath: '/src/assets/canyon-rock-img.avif',
+        imgPath:    "https://ooelvqpdhbpsjsqbrljg.supabase.co/storage/v1/object/public/ultimate-adventure-prod/adventure-card-photos/HogwartsCanyon.png",
         name: "Canyoneering",
         description: "Locations such as Zion, Capital Reef, and more",
     },
     {
         id: 2,
-        imgPath: '/src/assets/rappelling1.avif',
+        imgPath: "https://ooelvqpdhbpsjsqbrljg.supabase.co/storage/v1/object/public/ultimate-adventure-prod/adventure-card-photos/Rappeling.png",
         name: "Climbing",
         description: "Rock climbing, ice climbing, and more",
     },
     {
         id: 3,
-        imgPath: '/src/assets/canyon-rock-img.avif',
+        imgPath: "https://ooelvqpdhbpsjsqbrljg.supabase.co/storage/v1/object/public/ultimate-adventure-prod/adventure-card-photos/WhiteWater.png",
         name: "Rafting",
         description: "White water",
     }
@@ -40,11 +42,14 @@ const FeaturedActivityCard = ({ activity }: { activity: Activity }) => {
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent transition-opacity duration-300"></div>
       
       {/* Content */}
-      <div className="absolute bottom-0 left-0 right-0 p-6 text-white flex items-center gap-2">
-        <h3 className="text-4xl font-bold mb-2">{activity.name}</h3>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="size-8">
-              <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
-          </svg>
+      <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+          <Link to="/book">
+              <h3 className="text-4xl font-bold mb-2 flex no-wrap items-center">
+                  {activity.name}
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="size-12 pt-2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+                  </svg></h3>
+          </Link>
       </div>
     </div>
   );

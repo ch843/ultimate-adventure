@@ -1,11 +1,25 @@
+import * as React from 'react';
 import {useEffect, useState} from 'react';
-import * as React from "react";
 import {ActivityCardDAO} from "../../model/ActivityCardDAO.ts";
 import {Tables} from "../../definitions/generatedDefinitions.ts";
-import {ContactFormInformationDAO} from "../../model/ContactFormInformationDAO.ts";
+import {
+  ContactFormInformationDAO,
+  ContactFormSchema,
+  ContactFormToSubmit
+} from "../../model/ContactFormInformationDAO.ts";
+
+const formDataDefaults: ContactFormToSubmit = {
+  first_name: "",
+  last_name: "",
+  email: "",
+  phone: null,
+  activity_inquiry_id: null,
+  message: "",
+  created_at: new Date().toISOString()
+}
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState<Tables<'Contact Form Info'>[]>([]);
+  const [formData, setFormData] = useState<ContactFormToSubmit>(formDataDefaults);
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<null | 'success' | 'error'>(null);
@@ -22,16 +36,8 @@ const ContactForm = () => {
       }
     }
 
-    fetchActivities();
+    void fetchActivities();
   }, []);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,18 +45,15 @@ const ContactForm = () => {
     setSubmitStatus(null);
     
     try {
-      await ContactFormInformationDAO.postContactFormData({formData: formData})
-      
+      const parsedData = ContactFormSchema.safeParse(formData)
+      if(!parsedData.success) {
+        console.log(parsedData.error);
+        throw new Error("Error parsing form data.");
+      }
+      await ContactFormInformationDAO.postContactFormData(parsedData.data)
+
       // Reset form on success
-      setFormData({
-        activity_inquiry_id: 0,
-        first_name: '',
-        last_name: '',
-        email: '',
-        phone: '',
-        message: '',
-        created_at: ''
-      });
+      setFormData(formDataDefaults);
       
       setSubmitStatus('success');
     } catch (error) {
@@ -73,7 +76,7 @@ const ContactForm = () => {
           
           {/* Right Side - Contact Form */}
           <div className="md:w-1/2 p-8">
-            <h2 className="text-3xl font-bold mb-6 text-center">CONTACT US</h2>
+            <h2 className="text-5xl font-light mb-8 text-center">CONTACT US</h2>
             
             {submitStatus === 'success' && (
               <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
@@ -97,7 +100,12 @@ const ContactForm = () => {
                     type="text"
                     required
                     value={formData.first_name}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      const newVal = e.target.value;
+                      setFormData((prev) => ({
+                        ...prev,
+                        first_name: newVal
+                      }))}}
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                   />
                 </div>
@@ -110,7 +118,12 @@ const ContactForm = () => {
                     type="text"
                     required
                     value={formData.last_name}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      const newVal = e.target.value;
+                      setFormData((prev) => ({
+                        ...prev,
+                        last_name: newVal
+                      }))}}
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                   />
                 </div>
@@ -124,7 +137,12 @@ const ContactForm = () => {
                   type="email"
                   required
                   value={formData.email}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    const newVal = e.target.value;
+                    setFormData((prev) => ({
+                      ...prev,
+                      email: newVal
+                    }))}}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                 />
               </div>
@@ -135,8 +153,13 @@ const ContactForm = () => {
                   id="phone"
                   name="phone"
                   type="tel"
-                  value={formData.phone}
-                  onChange={handleChange}
+                  value={formData.phone ?? ""}
+                  onChange={(e) => {
+                    const newVal = e.target.value;
+                    setFormData((prev) => ({
+                      ...prev,
+                      phone: newVal
+                    }))}}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                 />
               </div>
@@ -146,13 +169,18 @@ const ContactForm = () => {
                 <select
                   id="activityType"
                   name="activityType"
-                  value={formData.activity_inquiry_id}
-                  onChange={handleChange}
+                  value={formData.activity_inquiry_id ?? 0}
+                  onChange={(e) => {
+                    const newVal = e.target.value;
+                    setFormData((prev) => ({
+                      ...prev,
+                      activity_inquiry_id: Number(newVal)
+                    }))}}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                 >
-                  <option disabled value='' selected hidden />
+                  <option selected value="">Choose an activity...</option>
                   {activities.map((activity) => (
-                      <option value={activity.card_id}>{activity.title.toUpperCase()}</option>
+                      <option key={activity.card_id} value={activity.card_id} className="uppercase">{activity.title}</option>
                   ))}
                 </select>
               </div>
@@ -165,7 +193,12 @@ const ContactForm = () => {
                   rows={4}
                   required
                   value={formData.message}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    const newVal = e.target.value;
+                    setFormData((prev) => ({
+                      ...prev,
+                      message: newVal
+                    }))}}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                   placeholder="Tell us about your inquiry or what you're interested in booking..."
                 ></textarea>

@@ -1,5 +1,6 @@
 import Testimonials from "../sections/Testimonials.tsx";
 import Hero from "../sections/Hero.tsx";
+import ContactForm from "../sections/ContactForm.tsx";
 
 
 const Reviews = () => {
@@ -10,6 +11,7 @@ const Reviews = () => {
                 title="Testimonials"
             />
             <Testimonials />
+            <ContactForm />
         </>
     );
 };

@@ -9,25 +9,19 @@ class _ActivityCardDAO {
         this._client = client;
     }
 
-    // public async getActivityCard(activityId: string): Promise</*supabase generated type*/> {}
-    //
-    // public async updateActivityCard(id: string): Promise<void> {}
-    //
-    // public async deleteActivityCard(id: string): Promise<void> {}
-    //
-    // public async createActivityCard(activityId: string): Promise<void> {}
-
-    // public async getAllActivityTitles(): Promise<Array<{ title: string; card_id: string }>> {
-    //     const { data, error } = await this._client
-    //         .from('Adventure Cards')
-    //         .select('title, card_id')
-    //     if (error)  {
-    //         console.log(error);
-    //         throw error;
-    //     }
-    //     console.log('getAllActivityTypes', data);
-    //     return data;
-    // }
+    public async getActivityCard(id: number): Promise<Tables<'Adventure Cards'>> {
+        const { data, error } = await this._client
+            .from('Adventure Cards')
+            .select('*')
+            .eq('card_id', id)
+            .limit(1)
+        if (error)  {
+            console.log(error);
+            throw error;
+        }
+        console.log('getActivityCard', data);
+        return data[0];
+    }
 
     public async getAllActivityCards(): Promise<Tables<'Adventure Cards'>[]> {
         const { data, error } = await this._client
@@ -40,6 +34,12 @@ class _ActivityCardDAO {
         console.log('getAllActivityCards', data);
         return data;
     }
+
+    // public async updateActivityCard(id: string): Promise<void> {}
+    //
+    // public async deleteActivityCard(id: string): Promise<void> {}
+    //
+    // public async createActivityCard(activityId: string): Promise<void> {}
 
 }
 
