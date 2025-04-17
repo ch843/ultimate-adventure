@@ -11,6 +11,10 @@ A React-based recreation of the Ultimate Adventure Guides website using React an
 
 - **Page Components**
   - `Home.tsx`: Main homepage component that assembles all sections
+  - `Book.tsx`: Booking page where all available adventures are listed with information
+  - `ActivityDetails.tsx`: Details page with more info on adventures
+  - `Reviews.tsx`: Page listing reviews of past clients
+  - `About.tsx`: About Ultimate Adventure Guides and contact info
 
 - **Section Components**
   - `Hero.tsx`: Main hero section with background image and call-to-action buttons
@@ -54,3 +58,4 @@ npm run build
 - TypeScript
 - Tailwind CSS 4
 - Vite 6
+- Supabase
