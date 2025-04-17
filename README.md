@@ -31,6 +31,11 @@ A React-based recreation of the Ultimate Adventure Guides website using React an
 - Component-based architecture
 - Modern, clean UI that matches the original site
 - Tailwind CSS for styling
+- React Router for navigation
+- Loading and error handling
+- Dynamic content through database storage and display
+- zod and schema typing usage for database consistency
+- Hosted on Vercel
 
 ## Getting Started
 
@@ -52,10 +57,9 @@ npm run dev
 npm run build
 ```
 
-## Technologies Used
+## API used
+- Supabase database and S3 photo bucket
 
-- React 19
-- TypeScript
-- Tailwind CSS 4
-- Vite 6
-- Supabase
+## Additional Features (beyond requirements)
+- Tailwind CSS
+- Supabase database for persistent data
