@@ -1,24 +1,24 @@
 const testimonials = [
   {
     id: 1,
-    name: "Sarah Johnson",
-    location: "United States",
-    image: "https://randomuser.me/api/portraits/women/32.jpg",
-    text: "The Ultimate Adventure Guides trip to New Zealand was the best travel experience of my life. Every detail was perfectly planned, and the guides were incredibly knowledgeable.",
+    name: "Greenix Team",
+    date: "11/13/2021",
+    image: "https://ooelvqpdhbpsjsqbrljg.supabase.co/storage/v1/object/public/ultimate-adventure-prod/review-profiles/Greenix_Team.avif",
+    text: "We took a group of 11 people to canyoneer through Leprechaun Canyon for a leadership retreat activity and THIS ONE IS FOR THE BOOKS. Not only is the canyon breathtaking, but Sharon and her assistant guide Will gave us exceptional service. We had quite a few experienced hikers and a couple nervous hikers, and they made it such a comfortable and enjoyable experience for all. Plus - they are just fun!! Would 10/10 recommend this specific hike, but if you are going, take Sharon!! She is the best.",
   },
   {
     id: 2,
-    name: "James Wilson",
-    location: "United Kingdom",
-    image: "https://randomuser.me/api/portraits/men/37.jpg",
-    text: "I can't recommend this service enough. The Costa Rica adventure was amazing, from the rainforest hikes to zip-lining. Will definitely book with them again!",
+    name: "Sara",
+    date: "9/11/2021",
+    image: "https://ooelvqpdhbpsjsqbrljg.supabase.co/storage/v1/object/public/ultimate-adventure-prod/review-profiles/Sara.avif",
+    text: "Sharon is an expert canyoneer and has also been so knowledgeable about the details of each canyon we have done with her. She is safe, competent and yet relaxed and makes the experience fun and enjoyable. She is also great at explaining and teaching so I have not only had a great time but have also improved my canyoneering knowledge. Highly recommend!! You will have a great time—she will cater to your experience and adventure level.",
   },
   {
     id: 3,
-    name: "Elena Rodriguez",
-    location: "Spain",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
-    text: "The Iceland tour exceeded all my expectations. I got to see the northern lights and explore ice caves. Truly a once-in-a-lifetime experience.",
+    name: "Josh",
+    date: "6/3/2020",
+    image: "https://ooelvqpdhbpsjsqbrljg.supabase.co/storage/v1/object/public/ultimate-adventure-prod/review-profiles/Josh_JPG.avif",
+    text: "I have been Canyoneering with Sharon many times over the years. She has lead me through everything from very basic canyons, to extremely technical canyons. Not only does Sharon have a great respect for the outdoors, but she has the experience and knowledge to make any Canyon experience fun and exciting. I would recommend Sharon to any new person looking to explore the joy of Earth’s Canyons.",
   },
 ];
 
@@ -43,7 +43,7 @@ const TestimonialCard = ({ testimonial }: { testimonial: typeof testimonials[0] 
         />
         <div>
           <h4 className="font-medium text-dark">{testimonial.name}</h4>
-          <p className="text-gray-500 text-sm">{testimonial.location}</p>
+          <p className="text-gray-500 text-sm">{testimonial.date}</p>
         </div>
       </div>
     </div>
@@ -54,26 +54,17 @@ const Testimonials = () => {
   return (
     <section className="py-16 bg-light">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-dark">What Our Travelers Say</h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Real experiences from adventurers who have explored with us
-          </p>
-        </div>
+        {/*<div className="text-center mb-12">*/}
+        {/*  <h2 className="text-3xl md:text-4xl font-bold mb-4 text-dark">What Our Customers Say</h2>*/}
+        {/*  <p className="text-lg text-gray-600 max-w-3xl mx-auto">*/}
+        {/*    Real experiences from adventurers who have explored with us*/}
+        {/*  </p>*/}
+        {/*</div>*/}
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial) => (
             <TestimonialCard key={testimonial.id} testimonial={testimonial} />
           ))}
-        </div>
-        
-        <div className="text-center mt-12">
-          <a href="#" className="inline-flex items-center text-primary hover:text-primary/80 font-medium">
-            Read More Reviews
-            <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </a>
         </div>
       </div>
     </section>
