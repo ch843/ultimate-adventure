@@ -9,7 +9,7 @@ const Header = () => {
     return (
         <header className="fixed w-full bg-gray-800 shadow-md z-50">
             {/* Desktop Navigation */}
-            <div className="container mx-auto px-4 py-5 flex justify-center items-center">
+            <div className="container mx-auto px-4 flex justify-center items-center">
                 <nav className="hidden md:flex space-x-8 text-2xl items-center">
                     <Link to="/">
                         <img src={logo} alt="Mountain Logo" className="h-fit"/>
@@ -21,8 +21,8 @@ const Header = () => {
                 </nav>
             </div>
 
-            <div className='md:hidden container mx-auto px-4 py-3 flex justify-between items-center'>
-                <img src={logo} alt="Mountain Logo" className="h-auto"/>
+            <div className='md:hidden w-full px-4 py-3 flex justify-between items-center'>
+                <img src={logo} alt="Mountain Logo" className="h-12"/>
 
                 {/* Mobile menu button */}
                 <button

@@ -17,16 +17,16 @@ const Hero = ({ imgUrl, ifMain = false, title }: HeroProps) => {
               {/* Content */}
               <div className="container mx-auto px-4 z-10 text-white text-center flex-col items-center">
                   {ifMain &&
-                      <div className="bg-secondary hover:bg-secondary/90 text-white py-3 mb-8 font-light rounded-md text-4xl">
+                      <div className="bg-secondary hover:bg-secondary/90 text-white py-3 mb-8 font-light rounded-md text-xl sm:text-2xl md:text-6xl">
                           CANYONEERING | ROCK CLIMBING | RAPPELLING | AND MORE
                       </div>
                   }
-                  <p className="text-8xl font-medium mb-8 max-w-8xl mx-auto uppercase">
+                  <p className="text-4xl md:text-6xl font-medium mb-8 max-w-8xl mx-auto uppercase">
                       {title}
                   </p>
                   {ifMain &&
                       <Link to="/book">
-                          <button className="bg-transparent hover:bg-white/10 text-white my-3 py-3 px-8 rounded-md border-2 border-white text-3xl">
+                          <button className="bg-transparent hover:bg-white/10 text-white my-3 py-2 px-4 md:py-3 md:px-10 rounded-md border-2 border-white text-lg sm:text-xl md:text-3xl">
                             ADVENTURE STARTS HERE
                           </button>
                       </Link>
