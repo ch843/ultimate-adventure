@@ -1,0 +1,5 @@
+.text {
+    transition: font-size, color, font-weight;
+    transition-duration: 200ms;
+    transition-timing-function: ease-in-out;
+}

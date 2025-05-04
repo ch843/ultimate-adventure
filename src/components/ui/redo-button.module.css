@@ -1,0 +1,96 @@
+/** All buttons are a flex container with a center alignment */
+.button {
+    display: flex;
+    cursor: pointer;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+
+    border-radius: 8px;
+    &.xs,
+    &.sm {
+        border-radius: 6px;
+    }
+
+    &.xs {
+        height: 24px;
+    }
+    &.sm {
+        height: 28px;
+    }
+    &.md {
+        height: 36px;
+    }
+    &.lg {
+        height: 40px;
+    }
+    &.xl {
+        height: 44px;
+    }
+}
+
+.icon-container {
+    &.xs {
+        > * {
+            height: 12px;
+            width: 12px;
+        }
+    }
+    &.sm {
+        > * {
+            height: 14px;
+            width: 14px;
+        }
+    }
+    &.md,
+    &.lg,
+    &.xl {
+        > * {
+            height: 20px;
+            width: 20px;
+        }
+    }
+
+    &.dont-restrain-icon-width {
+        > * {
+            width: unset;
+        }
+    }
+
+    /* Needed to make the large icon only button a perfect square */
+    &.lg {
+        padding-right: 2px;
+        padding-left: 2px;
+    }
+}
+
+.dropdown-button {
+    > :nth-child(1) > button {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    > :nth-child(2) > button {
+        border-left: 0px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        margin-left: -1px;
+    }
+}
+
+.spinner {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-self: baseline;
+}
+
+.button-content {
+    width: 100%;
+    &.pending {
+        opacity: 0;
+    }
+}
