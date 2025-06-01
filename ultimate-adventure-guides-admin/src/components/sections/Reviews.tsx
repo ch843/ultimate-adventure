@@ -1,4 +1,4 @@
-const testimonials = [
+const reviews = [
   {
     id: 1,
     name: "Greenix Team",
@@ -22,7 +22,7 @@ const testimonials = [
   },
 ];
 
-const TestimonialCard = ({ testimonial }: { testimonial: typeof testimonials[0] }) => {
+const ReviewsCard = ({ testimonial }: { testimonial: typeof reviews[0] }) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-8 flex flex-col h-full">
       <div className="flex-grow">
@@ -50,7 +50,7 @@ const TestimonialCard = ({ testimonial }: { testimonial: typeof testimonials[0] 
   );
 };
 
-const Testimonials = () => {
+const Reviews = () => {
   return (
     <section className="py-16 bg-light">
       <div className="container mx-auto px-4">
@@ -62,8 +62,8 @@ const Testimonials = () => {
         {/*</div>*/}
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial) => (
-            <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+          {reviews.map((testimonial) => (
+            <ReviewsCard key={testimonial.id} testimonial={testimonial} />
           ))}
         </div>
       </div>
@@ -71,4 +71,4 @@ const Testimonials = () => {
   );
 };
 
-export default Testimonials;
+export default Reviews;
