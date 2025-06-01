@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { ActivityCardDAO } from "../../model/ActivityCardDAO.ts";
 import Hero from "../sections/Hero.tsx";
 import { Tables } from "../../definitions/generatedDefinitions.ts";
-import ContactForm from "../sections/ContactForm.tsx";
 import { Modal } from "../modal.tsx";
 import EditCardForm from "../forms/EditCardForm.tsx";
 
@@ -56,9 +55,6 @@ const AdventureCard = ({ card, type, onEdit }: { card: Tables<'Adventure Cards'>
             )}
 
             <div className="flex gap-2 mt-4">
-              <a href={`/activity/${card.card_id}`} className="text-orange-400 inline-block underline">
-                MORE INFO
-              </a>
               <button
                 onClick={() => onEdit(card.card_id)}
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded text-sm"
@@ -141,7 +137,6 @@ const Book = () => {
           </>
         )}
       </div>
-      <ContactForm />
 
       {editingCardId && (
         <Modal isOpen={editModalOpen} onClose={handleCloseModal}>
