@@ -35,8 +35,19 @@ class _ActivityCardDAO {
         return data;
     }
 
-    // public async updateActivityCard(id: string): Promise<void> {}
-    //
+    public async updateActivityCard(id: number, updateData: Partial<Tables<'Adventure Cards'>>): Promise<void> {
+        const { data, error } = await this._client
+            .from('Adventure Cards')
+            .update(updateData)
+            .eq('card_id', id);
+        
+        if (error) {
+            console.log(error);
+            throw error;
+        }
+        console.log('updateActivityCard', data);
+    }
+
     // public async deleteActivityCard(id: string): Promise<void> {}
     //
     // public async createActivityCard(activityId: string): Promise<void> {}

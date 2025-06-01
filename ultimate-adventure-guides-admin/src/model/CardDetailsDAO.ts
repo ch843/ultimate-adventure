@@ -23,6 +23,19 @@ class _CardDetailsDAO {
         return data[0];
     }
 
+    public async updateCardDetails(cardId: number, updateData: Partial<Tables<'Card Details'>>): Promise<void> {
+        const { data, error } = await this._client
+            .from('Card Details')
+            .update(updateData)
+            .eq('card_id', cardId);
+        
+        if (error) {
+            console.log(error);
+            throw error;
+        }
+        console.log('updateCardDetails', data);
+    }
+
 }
 
 //export instance of class

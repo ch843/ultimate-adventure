@@ -3,8 +3,10 @@ import { ActivityCardDAO } from "../../model/ActivityCardDAO.ts";
 import Hero from "../sections/Hero.tsx";
 import { Tables } from "../../definitions/generatedDefinitions.ts";
 import ContactForm from "../sections/ContactForm.tsx";
+import { Modal } from "../shared/Modal.tsx";
+import EditCardForm from "../forms/EditCardForm.tsx";
 
-const AdventureCard = ({ card, type }: { card: Tables<'Adventure Cards'>, type: string }) => {
+const AdventureCard = ({ card, type, onEdit }: { card: Tables<'Adventure Cards'>, type: string, onEdit: (cardId: number) => void }) => {
   return (
       <>
         {card.category === type &&
@@ -53,9 +55,17 @@ const AdventureCard = ({ card, type }: { card: Tables<'Adventure Cards'>, type: 
                           </p>
                       )}
 
-                      <a href={`/activity/${card.card_id}`} className="text-orange-400 mt-2 inline-block underline">
-                          MORE INFO
-                      </a>
+                      <div className="flex gap-2 mt-4">
+                          <a href={`/activity/${card.card_id}`} className="text-orange-400 inline-block underline">
+                              MORE INFO
+                          </a>
+                          <button 
+                              onClick={() => onEdit(card.card_id)}
+                              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded text-sm"
+                          >
+                              EDIT
+                          </button>
+                      </div>
                   </div>
               </div>
         }
@@ -66,6 +76,8 @@ const AdventureCard = ({ card, type }: { card: Tables<'Adventure Cards'>, type: 
 const Book = () => {
     const [activityCards, setActivityCards] = useState<Tables<'Adventure Cards'>[]>([]);
     const [loading, setLoading] = useState(true);
+    const [editModalOpen, setEditModalOpen] = useState(false);
+    const [editingCardId, setEditingCardId] = useState<number | null>(null);
 
     useEffect(() => {
         async function fetchCards() {
@@ -84,6 +96,26 @@ const Book = () => {
 
     const activityCategories = ["Canyoneering", "Climbing", "Rafting"];
 
+    const handleEditCard = (cardId: number) => {
+        setEditingCardId(cardId);
+        setEditModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setEditModalOpen(false);
+        setEditingCardId(null);
+    };
+
+    const handleSaveCard = async () => {
+        // Refresh the cards list after saving
+        try {
+            const cards = await ActivityCardDAO.getAllActivityCards();
+            setActivityCards(cards);
+        } catch (error) {
+            console.error("Error refreshing activity cards:", error);
+        }
+    };
+
     return (
         <>
             <Hero
@@ -101,7 +133,7 @@ const Book = () => {
                                 <h2 className="text-5xl font my-8 text-center uppercase">{category}</h2>
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mx-20">
                                     {activityCards.map(card => (
-                                        <AdventureCard key={card.card_id} card={card} type={category} />
+                                        <AdventureCard key={card.card_id} card={card} type={category} onEdit={handleEditCard} />
                                     ))}
                                 </div>
                             </section>
@@ -110,6 +142,16 @@ const Book = () => {
                 )}
             </div>
             <ContactForm />
+            
+            {editingCardId && (
+                <Modal isOpen={editModalOpen} onClose={handleCloseModal}>
+                    <EditCardForm
+                        cardId={editingCardId}
+                        onSave={handleSaveCard}
+                        onClose={handleCloseModal}
+                    />
+                </Modal>
+            )}
         </>
     );
 };
