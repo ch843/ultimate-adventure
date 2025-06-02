@@ -52,6 +52,10 @@ const AdventureCard = ({ card, type }: { card: Tables<'Adventure Cards'>, type: 
                 MAX: {card.max_people} PEOPLE
               </p>
             )}
+
+            <a href={`/activity/${card.card_id}`} className="text-orange-400 mt-2 inline-block underline">
+              MORE INFO
+            </a>
           </div>
         </div>
       }
