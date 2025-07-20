@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { ActivityCardDAO } from "../../model/ActivityCardDAO.ts";
-import Hero from "../sections/Hero.tsx";
 import { Tables } from "../../definitions/generatedDefinitions.ts";
-import { Modal } from "../modal.tsx";
+import { Modal } from "../shared/modal.tsx";
 import EditCardForm from "../forms/EditCardForm.tsx";
 
 const AdventureCard = ({ card, type, onEdit }: { card: Tables<'Adventure Cards'>, type: string, onEdit: (cardId: number) => void }) => {
@@ -69,7 +68,7 @@ const AdventureCard = ({ card, type, onEdit }: { card: Tables<'Adventure Cards'>
   );
 };
 
-const Book = () => {
+const Edit = () => {
   const [activityCards, setActivityCards] = useState<Tables<'Adventure Cards'>[]>([]);
   const [loading, setLoading] = useState(true);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -114,12 +113,9 @@ const Book = () => {
 
   return (
     <>
-      <Hero
-        imgUrl='https://ooelvqpdhbpsjsqbrljg.supabase.co/storage/v1/object/public/ultimate-adventure-prod//hikingRocks.avif'
-        title='Choose your adventure'
-      />
-
       <div className="container mx-auto py-12 px-4">
+        <h1 className="mt-7 text-center text-6xl p-10 pb-0">EDIT ADVENTURES</h1>
+        <h3 className="text-center italic text-md mt-3">Edit available activities for clients, including details and pricing</h3>
         {loading ? (
           <p className="text-center">Loading adventures...</p>
         ) : (
@@ -151,4 +147,4 @@ const Book = () => {
   );
 };
 
-export default Book;
+export default Edit;

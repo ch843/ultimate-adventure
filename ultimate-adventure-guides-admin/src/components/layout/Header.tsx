@@ -15,7 +15,8 @@ const Header = () => {
             <img src={logo} alt="Mountain Logo" className="h-fit" />
           </Link>
           <Link to="/" className={linkStyle}>HOME</Link>
-          <Link to="/about" className={linkStyle}>ABOUT</Link>
+          <Link to="/edit" className={linkStyle}>ADVENTURES</Link>
+          <Link to="/club" className={linkStyle}>CLUB</Link>
         </nav>
       </div>
 

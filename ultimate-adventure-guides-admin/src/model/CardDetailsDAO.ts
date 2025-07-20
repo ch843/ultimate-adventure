@@ -19,12 +19,11 @@ class _CardDetailsDAO {
             console.log(error);
             throw error;
         }
-        console.log('getAllDetails', data);
         return data[0];
     }
 
     public async updateCardDetails(cardId: number, updateData: Partial<Tables<'Card Details'>>): Promise<void> {
-        const { data, error } = await this._client
+        const { error } = await this._client
             .from('Card Details')
             .update(updateData)
             .eq('card_id', cardId);
@@ -33,7 +32,6 @@ class _CardDetailsDAO {
             console.log(error);
             throw error;
         }
-        console.log('updateCardDetails', data);
     }
 
 }
