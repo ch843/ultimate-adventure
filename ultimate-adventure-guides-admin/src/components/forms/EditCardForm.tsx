@@ -64,7 +64,8 @@ const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
     full_day_pp: '',
     min_people: '',
     max_people: '',
-    hourly: false
+    hourly: false,
+    active: false
   });
 
   const [detailsData, setDetailsData] = useState({
@@ -105,7 +106,8 @@ const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
         full_day_pp: cardData.full_day_pp?.toString() || '',
         min_people: cardData.min_people?.toString() || '',
         max_people: cardData.max_people?.toString() || '',
-        hourly: cardData.hourly || false
+        hourly: cardData.hourly || false,
+        active: cardData.active || false
       });
 
       if (cardDetails) {
@@ -168,7 +170,8 @@ const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
         full_day_pp: formData.full_day_pp ? parseFloat(formData.full_day_pp) : null,
         min_people: formData.min_people ? parseInt(formData.min_people) : null,
         max_people: formData.max_people ? parseInt(formData.max_people) : null,
-        hourly: formData.hourly
+        hourly: formData.hourly,
+        active: formData.active
       });
 
       if (details) {
@@ -235,6 +238,16 @@ const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
                 className="mr-2"
             />
             <span className="text-sm font-medium text-gray-700">Hourly Pricing</span>
+          </label>
+          <label className="flex items-center">
+            <input
+                type="checkbox"
+                name="active"
+                checked={!!formData.active}
+                onChange={handleInputChange}
+                className="mr-2"
+            />
+            <span className="text-sm font-medium text-gray-700">Active</span>
           </label>
         </div>
       </div>

@@ -7,7 +7,7 @@ import ContactForm from "../sections/ContactForm.tsx";
 const AdventureCard = ({ card, type }: { card: Tables<'Adventure Cards'>, type: string }) => {
   return (
     <>
-      {card.category === type &&
+      {card.category === type && card.active &&
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <img
             src={card.img_link}

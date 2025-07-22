@@ -39,7 +39,8 @@ const activityDataDefault: Tables<'Adventure Cards'> = {
     min_people: -1,
     price_pp: -1,
     title: "",
-    updated_at: ""
+    updated_at: "",
+    active: true
 }
 
 const ActivityDetails = () => {
@@ -84,9 +85,15 @@ const ActivityDetails = () => {
                     </section>
 
                     <section className="flex justify-center gap-6 px-4 md:px-16 mx-5">
-                        <img src={details.gallery_img1} alt="Gallery img 1" className="w-1/4 rounded shadow-md object-cover" />
-                        <img src={details.gallery_img2} alt="Gallery img 2" className="w-1/4 rounded shadow-md object-cover" />
-                        <img src={details.gallery_img3} alt="Gallery img 3" className="w-1/4 rounded shadow-md object-cover" />
+                        {details.gallery_img1 && (
+                            <img src={details.gallery_img1} alt="Gallery img 1" className="w-1/4 rounded shadow-md object-cover" />
+                        )}
+                        {details.gallery_img2 && (
+                            <img src={details.gallery_img2} alt="Gallery img 2" className="w-1/4 rounded shadow-md object-cover" />
+                        )}
+                        {details.gallery_img3 && (
+                            <img src={details.gallery_img3} alt="Gallery img 3" className="w-1/4 rounded shadow-md object-cover" />
+                        )}
                     </section>
 
                     <div className="my-10 mx-auto w-2/3 border-t border-gray-300"></div>
