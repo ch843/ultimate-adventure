@@ -52,14 +52,22 @@ const AdventureCard = ({ card, type, onEdit }: { card: Tables<'Adventure Cards'>
                 MAX: {card.max_people} PEOPLE
               </p>
             )}
-
             <div className="flex gap-2 mt-4">
               <button
-                onClick={() => onEdit(card.card_id)}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded text-sm"
+                  onClick={() => onEdit(card.card_id)}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded text-sm"
               >
                 EDIT
               </button>
+              {card.active ? (
+                  <div className="bg-green-600 rounded-full px-3 py-1 text-sm font-semibold text-white">
+                    Active
+                  </div>
+                ) : (
+                  <div className="bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-600">
+                    Inactive
+                  </div>
+                )}
             </div>
           </div>
         </div>
