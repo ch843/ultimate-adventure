@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { ActivityCardDAO } from "../../model/ActivityCardDAO.ts";
+import { useState } from "react";
 import Hero from "../sections/Hero.tsx";
 import { Tables } from "../../definitions/generatedDefinitions.ts";
 import { Modal } from "../modal.tsx";
 import EditCardForm from "../forms/EditCardForm.tsx";
+import { useActivityCards } from "../../hooks/useActivityCards";
 
 const AdventureCard = ({ card, type, onEdit }: { card: Tables<'Adventure Cards'>, type: string, onEdit: (cardId: number) => void }) => {
   return (
@@ -70,25 +70,9 @@ const AdventureCard = ({ card, type, onEdit }: { card: Tables<'Adventure Cards'>
 };
 
 const Book = () => {
-  const [activityCards, setActivityCards] = useState<Tables<'Adventure Cards'>[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { activityCards, isLoading: loading, refetch } = useActivityCards();
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editingCardId, setEditingCardId] = useState<number | null>(null);
-
-  useEffect(() => {
-    async function fetchCards() {
-      try {
-        const cards = await ActivityCardDAO.getAllActivityCards();
-        setActivityCards(cards);
-      } catch (error) {
-        console.error("Error fetching activity cards:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    void fetchCards();
-  }, []);
 
   const activityCategories = ["Canyoneering", "Climbing", "Rafting"];
 
@@ -102,14 +86,9 @@ const Book = () => {
     setEditingCardId(null);
   };
 
-  const handleSaveCard = async () => {
+  const handleSaveCard = () => {
     // Refresh the cards list after saving
-    try {
-      const cards = await ActivityCardDAO.getAllActivityCards();
-      setActivityCards(cards);
-    } catch (error) {
-      console.error("Error refreshing activity cards:", error);
-    }
+    refetch();
   };
 
   return (

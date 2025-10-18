@@ -1,70 +1,16 @@
-import {useEffect, useState} from "react";
-import {Tables} from "../../definitions/generatedDefinitions.ts";
-import {CardDetailsDAO} from "../../model/CardDetailsDAO.ts";
-import {Link, useParams} from "react-router-dom";
-import {ActivityCardDAO} from "../../model/ActivityCardDAO.ts";
+import { Link, useParams } from "react-router-dom";
 import ContactForm from "../sections/ContactForm.tsx";
-
-const detailsDataDefault: Tables<'Card Details'> = {
-    card_id: -1,
-    details_id: -1,
-    flood_danger: "",
-    gallery_img1: "",
-    gallery_img2: "",
-    gallery_img3: "",
-    gear: "",
-    hype: "",
-    length: "",
-    location_id: -1,
-    maps: "",
-    notes: "",
-    rappels: "",
-    rating: "",
-    season: "",
-    water: ""
-}
-
-const activityDataDefault: Tables<'Adventure Cards'> = {
-    adult_price: -1,
-    card_id: -1,
-    category: "",
-    child_price: -1,
-    created_at: "",
-    full_day_pp: -1,
-    half_day_pp: -1,
-    hourly: false,
-    img_link: "",
-    location: "",
-    max_people: -1,
-    min_people: -1,
-    price_pp: -1,
-    title: "",
-    updated_at: ""
-}
+import { useActivityCard } from "../../hooks/useActivityCards";
+import { useCardDetails } from "../../hooks/useCardDetails";
 
 const ActivityDetails = () => {
-    const [details, setDetails] = useState<Tables<'Card Details'>>(detailsDataDefault);
-    const [activity, setActivity] = useState<Tables<'Adventure Cards'>>(activityDataDefault);
-    const [loading, setLoading] = useState(true);
     const { id } = useParams();
+    const numberId = Number(id);
 
-    useEffect(() => {
-        async function fetchDetails() {
-            try {
-                const numberId = Number(id);
-                const detailData = await CardDetailsDAO.getAllActivityDetails(numberId);
-                setDetails(detailData);
-                const activityData = await ActivityCardDAO.getActivityCard(numberId);
-                setActivity(activityData);
-            } catch (error) {
-                console.error("Error fetching activity cards:", error);
-            } finally {
-                setLoading(false);
-            }
-        }
+    const { activityCard: activity, isLoading: activityLoading } = useActivityCard(numberId);
+    const { cardDetails: details, isLoading: detailsLoading } = useCardDetails(numberId);
 
-        void fetchDetails();
-    }, [id]);
+    const loading = activityLoading || detailsLoading;
 
     return (
         <>
@@ -76,7 +22,7 @@ const ActivityDetails = () => {
             </Link>
             {loading ? (
                 <p className="text-center">Loading adventures...</p>
-            ) : (
+            ) : (activity && details) ? (
                 <>
                     <section className="text-center py-10">
                         <h1 className="text-6xl tracking-wide text-teal-800 uppercase">{activity.title}</h1>
@@ -84,9 +30,9 @@ const ActivityDetails = () => {
                     </section>
 
                     <section className="flex justify-center gap-6 px-4 md:px-16 mx-5">
-                        <img src={details.gallery_img1} alt="Gallery img 1" className="w-1/4 rounded shadow-md object-cover" />
-                        <img src={details.gallery_img2} alt="Gallery img 2" className="w-1/4 rounded shadow-md object-cover" />
-                        <img src={details.gallery_img3} alt="Gallery img 3" className="w-1/4 rounded shadow-md object-cover" />
+                        <img src={details.gallery_img1 ?? ''} alt="Gallery img 1" className="w-1/4 rounded shadow-md object-cover" />
+                        <img src={details.gallery_img2 ?? ''} alt="Gallery img 2" className="w-1/4 rounded shadow-md object-cover" />
+                        <img src={details.gallery_img3 ?? ''} alt="Gallery img 3" className="w-1/4 rounded shadow-md object-cover" />
                     </section>
 
                     <div className="my-10 mx-auto w-2/3 border-t border-gray-300"></div>
@@ -137,6 +83,8 @@ const ActivityDetails = () => {
 
                     <ContactForm />
                 </>
+            ) : (
+                <p className="text-center text-red-600">Activity not found.</p>
             )}
         </>
     )

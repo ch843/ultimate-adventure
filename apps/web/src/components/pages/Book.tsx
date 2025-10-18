@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import { ActivityCardDAO } from "../../model/ActivityCardDAO.ts";
 import Hero from "../sections/Hero.tsx";
 import { Tables } from "../../definitions/generatedDefinitions.ts";
 import ContactForm from "../sections/ContactForm.tsx";
+import { useActivityCards } from "../../hooks/useActivityCards";
 
 const AdventureCard = ({ card, type }: { card: Tables<'Adventure Cards'>, type: string }) => {
   return (
@@ -64,23 +63,7 @@ const AdventureCard = ({ card, type }: { card: Tables<'Adventure Cards'>, type: 
 };
 
 const Book = () => {
-  const [activityCards, setActivityCards] = useState<Tables<'Adventure Cards'>[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchCards() {
-      try {
-        const cards = await ActivityCardDAO.getAllActivityCards();
-        setActivityCards(cards);
-      } catch (error) {
-        console.error("Error fetching activity cards:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    void fetchCards();
-  }, []);
+  const { activityCards, isLoading: loading } = useActivityCards();
 
   const activityCategories = ["Canyoneering", "Climbing", "Rafting"];
 

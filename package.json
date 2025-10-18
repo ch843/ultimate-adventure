@@ -9,7 +9,13 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:web": "turbo run dev --filter=@ultimate-adventure/web",
+    "dev:admin": "turbo run dev --filter=@ultimate-adventure/admin",
+    "dev:web-server": "turbo run dev --filter=@ultimate-adventure/web-server",
+    "dev:admin-server": "turbo run dev --filter=@ultimate-adventure/admin-server",
+    "dev:servers": "turbo run dev --filter=@ultimate-adventure/web-server --filter=@ultimate-adventure/admin-server",
     "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
     "clean": "turbo run clean"
   },
   "devDependencies": {
@@ -18,5 +24,9 @@
   "packageManager": "npm@10.2.4",
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "@trpc/client": "^11.6.0",
+    "@trpc/server": "^11.6.0"
   }
 }

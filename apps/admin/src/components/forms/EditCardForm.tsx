@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
-import { ActivityCardDAO } from '../../model/ActivityCardDAO';
-import { CardDetailsDAO } from '../../model/CardDetailsDAO';
-import { Tables } from '../../definitions/generatedDefinitions';
+import { useState, useEffect } from 'react';
+import { useActivityCard } from '../../hooks/useActivityCards';
+import { useCardDetails, useUpdateCardDetails } from '../../hooks/useCardDetails';
+import { useUpdateActivityCard } from '../../hooks/useActivityCards';
 
 interface EditCardFormProps {
   cardId: number;
@@ -10,10 +10,13 @@ interface EditCardFormProps {
 }
 
 const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [card, setCard] = useState<Tables<'Adventure Cards'> | null>(null);
-  const [details, setDetails] = useState<Tables<'Card Details'> | null>(null);
+  const { activityCard: card, isLoading: cardLoading } = useActivityCard(cardId);
+  const { cardDetails: details, isLoading: detailsLoading } = useCardDetails(cardId);
+  const { updateActivityCard, isUpdating: isUpdatingCard } = useUpdateActivityCard();
+  const { updateCardDetails, isUpdating: isUpdatingDetails } = useUpdateCardDetails();
+
+  const loading = cardLoading || detailsLoading;
+  const saving = isUpdatingCard || isUpdatingDetails;
 
   // Form state
   const [formData, setFormData] = useState({
@@ -47,58 +50,45 @@ const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
     gallery_img3: ''
   });
 
-  const fetchCard = useCallback(async () => {
-    setLoading(true);
-    try {
-      const cardData = await ActivityCardDAO.getActivityCard(cardId);
-      const cardDetails = await CardDetailsDAO.getAllActivityDetails(cardId);
-
-      setCard(cardData);
-      setDetails(cardDetails);
-
-      // Populate form with existing data
+  // Populate form with existing data when card and details are loaded
+  useEffect(() => {
+    if (card) {
       setFormData({
-        title: cardData.title || '',
-        location: cardData.location || '',
-        category: cardData.category || '',
-        img_link: cardData.img_link || '',
-        price_pp: cardData.price_pp?.toString() || '',
-        adult_price: cardData.adult_price?.toString() || '',
-        child_price: cardData.child_price?.toString() || '',
-        half_day_pp: cardData.half_day_pp?.toString() || '',
-        full_day_pp: cardData.full_day_pp?.toString() || '',
-        min_people: cardData.min_people?.toString() || '',
-        max_people: cardData.max_people?.toString() || '',
-        hourly: cardData.hourly || false
+        title: card.title || '',
+        location: card.location || '',
+        category: card.category || '',
+        img_link: card.img_link || '',
+        price_pp: card.price_pp?.toString() || '',
+        adult_price: card.adult_price?.toString() || '',
+        child_price: card.child_price?.toString() || '',
+        half_day_pp: card.half_day_pp?.toString() || '',
+        full_day_pp: card.full_day_pp?.toString() || '',
+        min_people: card.min_people?.toString() || '',
+        max_people: card.max_people?.toString() || '',
+        hourly: card.hourly || false
       });
-
-      if (cardDetails) {
-        setDetailsData({
-          hype: cardDetails.hype || '',
-          gear: cardDetails.gear || '',
-          length: cardDetails.length || '',
-          season: cardDetails.season || '',
-          rating: cardDetails.rating || '',
-          water: cardDetails.water || '',
-          flood_danger: cardDetails.flood_danger || '',
-          rappels: cardDetails.rappels || '',
-          notes: cardDetails.notes || '',
-          maps: cardDetails.maps || '',
-          gallery_img1: cardDetails.gallery_img1 || '',
-          gallery_img2: cardDetails.gallery_img2 || '',
-          gallery_img3: cardDetails.gallery_img3 || ''
-        });
-      }
-    } catch (error) {
-      console.error('Error fetching card:', error);
-    } finally {
-      setLoading(false);
     }
-  }, [cardId]);
+  }, [card]);
 
   useEffect(() => {
-    fetchCard();
-  }, [fetchCard]);
+    if (details) {
+      setDetailsData({
+        hype: details.hype || '',
+        gear: details.gear || '',
+        length: details.length || '',
+        season: details.season || '',
+        rating: details.rating || '',
+        water: details.water || '',
+        flood_danger: details.flood_danger || '',
+        rappels: details.rappels || '',
+        notes: details.notes || '',
+        maps: details.maps || '',
+        gallery_img1: details.gallery_img1 || '',
+        gallery_img2: details.gallery_img2 || '',
+        gallery_img3: details.gallery_img3 || ''
+      });
+    }
+  }, [details]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -118,34 +108,54 @@ const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
   const handleSave = async () => {
     if (!card) return;
 
-    setSaving(true);
     try {
-      await ActivityCardDAO.updateActivityCard(cardId, {
-        title: formData.title,
-        location: formData.location,
-        category: formData.category,
-        img_link: formData.img_link,
-        price_pp: formData.price_pp ? parseFloat(formData.price_pp) : null,
-        adult_price: formData.adult_price ? parseFloat(formData.adult_price) : null,
-        child_price: formData.child_price ? parseFloat(formData.child_price) : null,
-        half_day_pp: formData.half_day_pp ? parseFloat(formData.half_day_pp) : null,
-        full_day_pp: formData.full_day_pp ? parseFloat(formData.full_day_pp) : null,
-        min_people: formData.min_people ? parseInt(formData.min_people) : null,
-        max_people: formData.max_people ? parseInt(formData.max_people) : null,
-        hourly: formData.hourly
-      });
+      // Update activity card
+      await updateActivityCard(
+        {
+          id: cardId,
+          data: {
+            title: formData.title,
+            location: formData.location,
+            category: formData.category,
+            img_link: formData.img_link,
+            price_pp: formData.price_pp ? parseFloat(formData.price_pp) : null,
+            adult_price: formData.adult_price ? parseFloat(formData.adult_price) : null,
+            child_price: formData.child_price ? parseFloat(formData.child_price) : null,
+            half_day_pp: formData.half_day_pp ? parseFloat(formData.half_day_pp) : null,
+            full_day_pp: formData.full_day_pp ? parseFloat(formData.full_day_pp) : null,
+            min_people: formData.min_people ? parseInt(formData.min_people) : null,
+            max_people: formData.max_people ? parseInt(formData.max_people) : null,
+            hourly: formData.hourly
+          }
+        },
+        {
+          onError: (error) => {
+            console.error('Error saving card:', error);
+            alert('Error saving card. Please try again.');
+          }
+        }
+      );
 
+      // Update card details if they exist
       if (details) {
-        await CardDetailsDAO.updateCardDetails(cardId, detailsData);
+        await updateCardDetails(
+          {
+            cardId,
+            data: detailsData
+          },
+          {
+            onError: (error) => {
+              console.error('Error saving card details:', error);
+              alert('Error saving card details. Please try again.');
+            }
+          }
+        );
       }
 
       onSave();
       onClose();
     } catch (error) {
-      console.error('Error saving card:', error);
-      alert('Error saving card. Please try again.');
-    } finally {
-      setSaving(false);
+      console.error('Error saving:', error);
     }
   };
 
