@@ -29,7 +29,7 @@ const AdminHeader = () => {
           {navItems.map((item) => (
             <Button
               key={item.path}
-              variant={isActive(item.path) ? "default" : "ghost"}
+              variant={isActive(item.path) ? "link" : "ghost"}
               asChild
             >
               <Link to={item.path}>{item.label}</Link>

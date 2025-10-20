@@ -15,7 +15,7 @@ interface FormDialogProps {
   title: string;
   description: string;
   children: ReactNode;
-  formRef: RefObject<HTMLFormElement>;
+  formRef: RefObject<HTMLFormElement | null>;
   isSubmitting: boolean;
   submitButtonText?: string;
   submittingText?: string;

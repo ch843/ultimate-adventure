@@ -21,7 +21,7 @@ const Hero = ({ imgUrl, ifMain = false, title }: HeroProps) => {
       {/* Content */}
       <div className="container mx-auto px-4 z-10 text-white text-center flex-col items-center">
         {ifMain && (
-          <div className="bg-secondary hover:bg-secondary/90 text-white py-3 mb-8 font-light rounded-md text-xl sm:text-2xl md:text-6xl">
+          <div className="hover:bg-secondary/90 text-white py-3 mb-8 font-light rounded-md text-xl sm:text-2xl md:text-6xl">
             CANYONEERING | ROCK CLIMBING | RAPPELLING | AND MORE
           </div>
         )}

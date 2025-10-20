@@ -105,7 +105,7 @@ const Members = () => {
   };
 
   const handleEmailMember = (email: string, name: string) => {
-    const subject = encodeURIComponent(`Message from ${name}`);
+    const subject = encodeURIComponent(`Message to ${name}`);
     window.location.href = `mailto:${email}?subject=${subject}`;
   };
 
