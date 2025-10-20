@@ -1,14 +1,14 @@
-import { initTRPC, TRPCError } from '@trpc/server';
-import { z } from 'zod';
-import type { CreateExpressContextOptions } from '@trpc/server/adapters/express';
+import { initTRPC, TRPCError } from "@trpc/server";
+import { z } from "zod";
+import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
 
 /**
  * Context for tRPC requests
  * This can be extended with auth, database connections, etc.
  */
 export interface Context {
-  req: CreateExpressContextOptions['req'];
-  res: CreateExpressContextOptions['res'];
+  req: CreateExpressContextOptions["req"];
+  res: CreateExpressContextOptions["res"];
 }
 
 /**
@@ -37,7 +37,7 @@ export const publicProcedure = t.procedure;
  * Note: This is just an alias for publicProcedure.input() for convenience
  */
 export function validatedProcedure<TInput extends z.ZodType>(
-  inputSchema: TInput
+  inputSchema: TInput,
 ): ReturnType<typeof publicProcedure.input<TInput>> {
   return publicProcedure.input(inputSchema);
 }
@@ -48,25 +48,25 @@ export function validatedProcedure<TInput extends z.ZodType>(
 export function handleTRPCError(error: unknown): never {
   if (error instanceof z.ZodError) {
     const messages = error.errors.map(
-      (err) => `${err.path.join('.')}: ${err.message}`
+      (err) => `${err.path.join(".")}: ${err.message}`,
     );
     throw new TRPCError({
-      code: 'BAD_REQUEST',
-      message: `Validation failed: ${messages.join(', ')}`,
+      code: "BAD_REQUEST",
+      message: `Validation failed: ${messages.join(", ")}`,
       cause: error,
     });
   }
 
   if (error instanceof Error) {
     throw new TRPCError({
-      code: 'INTERNAL_SERVER_ERROR',
+      code: "INTERNAL_SERVER_ERROR",
       message: error.message,
       cause: error,
     });
   }
 
   throw new TRPCError({
-    code: 'INTERNAL_SERVER_ERROR',
-    message: 'An unknown error occurred',
+    code: "INTERNAL_SERVER_ERROR",
+    message: "An unknown error occurred",
   });
 }

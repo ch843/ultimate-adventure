@@ -1,12 +1,12 @@
-import { router, publicProcedure } from '@ultimate-adventure/backend-utils';
+import { router, publicProcedure } from "@ultimate-adventure/backend-utils";
 import {
   GetClubMemberRequestSchema,
   GetAllClubMembersRequestSchema,
   CreateClubMemberRequestSchema,
   UpdateClubMemberRequestSchema,
   DeleteClubMemberRequestSchema,
-} from '@ultimate-adventure/shared-models';
-import { clubMemberService } from '../services/club-member.service';
+} from "@ultimate-adventure/shared-models";
+import { clubMemberService } from "../services/club-member.service";
 
 export const clubMemberRouter = router({
   getClubMember: publicProcedure

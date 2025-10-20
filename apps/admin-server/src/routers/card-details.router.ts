@@ -1,10 +1,10 @@
-import { router, publicProcedure } from '@ultimate-adventure/backend-utils';
+import { router, publicProcedure } from "@ultimate-adventure/backend-utils";
 import {
   GetActivityDetailsRequestSchema,
   CreateCardDetailsRequestSchema,
   UpdateCardDetailsRequestSchema,
-} from '@ultimate-adventure/shared-models';
-import { cardDetailsService } from '../services/card-details.service';
+} from "@ultimate-adventure/shared-models";
+import { cardDetailsService } from "../services/card-details.service";
 
 export const cardDetailsRouter = router({
   getActivityDetails: publicProcedure

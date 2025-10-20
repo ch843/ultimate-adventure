@@ -1,19 +1,19 @@
-import { useForm } from '@tanstack/react-form';
+import { useForm } from "@tanstack/react-form";
 import {
   Button,
   Textarea,
   Label,
   Checkbox,
   Separator,
-} from '@ultimate-adventure/shared-components';
+} from "@ultimate-adventure/shared-components";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 interface AdventureFormData {
   title: string;
@@ -53,39 +53,39 @@ interface AdventureFormProps {
 }
 
 const defaultValues: AdventureFormData = {
-  title: '',
-  location: '',
-  category: '',
-  img_link: '',
-  price_pp: '',
-  adult_price: '',
-  child_price: '',
-  half_day_pp: '',
-  full_day_pp: '',
-  min_people: '',
-  max_people: '',
+  title: "",
+  location: "",
+  category: "",
+  img_link: "",
+  price_pp: "",
+  adult_price: "",
+  child_price: "",
+  half_day_pp: "",
+  full_day_pp: "",
+  min_people: "",
+  max_people: "",
   hourly: false,
   active: true,
-  hype: '',
-  gear: '',
-  length: '',
-  season: '',
-  rating: '',
-  water: '',
-  flood_danger: '',
-  rappels: '',
-  notes: '',
-  maps: '',
-  gallery_img1: '',
-  gallery_img2: '',
-  gallery_img3: '',
+  hype: "",
+  gear: "",
+  length: "",
+  season: "",
+  rating: "",
+  water: "",
+  flood_danger: "",
+  rappels: "",
+  notes: "",
+  maps: "",
+  gallery_img1: "",
+  gallery_img2: "",
+  gallery_img3: "",
 };
 
 export const AdventureForm = ({
   initialValues = {},
   onSubmit,
   onCancel,
-  submitLabel = 'Save Changes',
+  submitLabel = "Save Changes",
   isSubmitting = false,
 }: AdventureFormProps) => {
   const form = useForm({
@@ -282,7 +282,9 @@ export const AdventureForm = ({
               <Checkbox
                 id="hourly"
                 checked={field.state.value}
-                onCheckedChange={(checked) => field.handleChange(checked as boolean)}
+                onCheckedChange={(checked) =>
+                  field.handleChange(checked as boolean)
+                }
               />
               <Label htmlFor="hourly" className="cursor-pointer">
                 Hourly Pricing
@@ -297,7 +299,9 @@ export const AdventureForm = ({
               <Checkbox
                 id="active"
                 checked={field.state.value}
-                onCheckedChange={(checked) => field.handleChange(checked as boolean)}
+                onCheckedChange={(checked) =>
+                  field.handleChange(checked as boolean)
+                }
               />
               <Label htmlFor="active" className="cursor-pointer">
                 Published
@@ -400,19 +404,11 @@ export const AdventureForm = ({
       </div>
 
       <div className="flex gap-4 justify-end">
-        <Button
-          type="button"
-          onClick={onCancel}
-          variant="outline"
-        >
+        <Button type="button" onClick={onCancel} variant="outline">
           Cancel
         </Button>
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          variant="outline"
-        >
-          {isSubmitting ? 'Saving...' : submitLabel}
+        <Button type="submit" disabled={isSubmitting} variant="outline">
+          {isSubmitting ? "Saving..." : submitLabel}
         </Button>
       </div>
     </form>

@@ -1,10 +1,10 @@
-import { router, publicProcedure } from '@ultimate-adventure/backend-utils';
+import { router, publicProcedure } from "@ultimate-adventure/backend-utils";
 import {
   GetAdventureRequestSchema,
   ListAdventuresRequestSchema,
   CreateAdventureRequestSchema,
-} from '@ultimate-adventure/shared-models';
-import { adventureService } from '../services/adventure.service';
+} from "@ultimate-adventure/shared-models";
+import { adventureService } from "../services/adventure.service";
 
 export const adventureRouter = router({
   getAdventure: publicProcedure

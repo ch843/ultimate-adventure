@@ -1,12 +1,12 @@
-import { router, publicProcedure } from '@ultimate-adventure/backend-utils';
+import { router, publicProcedure } from "@ultimate-adventure/backend-utils";
 import {
   GetTripRequestSchema,
   GetAllTripsRequestSchema,
   CreateTripRequestSchema,
   UpdateTripRequestSchema,
   DeleteTripRequestSchema,
-} from '@ultimate-adventure/shared-models';
-import { tripService } from '../services/trip.service';
+} from "@ultimate-adventure/shared-models";
+import { tripService } from "../services/trip.service";
 
 export const tripRouter = router({
   getTrip: publicProcedure

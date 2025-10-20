@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { AdventureForm, AdventureFormData } from '../forms/AdventureForm';
-import { useCreateActivityCard } from '../../hooks/useActivityCards';
-import { useCreateCardDetails } from '../../hooks/useCardDetails';
+} from "@/components/ui/dialog";
+import { AdventureForm, AdventureFormData } from "../forms/AdventureForm";
+import { useCreateActivityCard } from "../../hooks/useActivityCards";
+import { useCreateCardDetails } from "../../hooks/useCardDetails";
 
 interface AddAdventureDialogProps {
   open: boolean;
@@ -20,8 +20,10 @@ export const AddAdventureDialog = ({
   onOpenChange,
   onSuccess,
 }: AddAdventureDialogProps) => {
-  const { createActivityCardAsync, isCreating: isCreatingCard } = useCreateActivityCard();
-  const { createCardDetailsAsync, isCreating: isCreatingDetails } = useCreateCardDetails();
+  const { createActivityCardAsync, isCreating: isCreatingCard } =
+    useCreateActivityCard();
+  const { createCardDetailsAsync, isCreating: isCreatingDetails } =
+    useCreateCardDetails();
   const [error, setError] = useState<string | null>(null);
 
   const isSubmitting = isCreatingCard || isCreatingDetails;
@@ -46,14 +48,14 @@ export const AddAdventureDialog = ({
           max_people: value.max_people ? parseInt(value.max_people) : null,
           hourly: value.hourly,
           active: value.active,
-        }
+        },
       });
 
       // Get the created card ID
       const cardId = result?.card?.card_id;
 
       if (!cardId) {
-        throw new Error('Failed to create activity card');
+        throw new Error("Failed to create activity card");
       }
 
       // Create card details
@@ -73,14 +75,14 @@ export const AddAdventureDialog = ({
           gallery_img1: value.gallery_img1,
           gallery_img2: value.gallery_img2,
           gallery_img3: value.gallery_img3,
-        }
+        },
       });
 
       onSuccess?.();
       onOpenChange(false);
     } catch (err) {
-      console.error('Error creating adventure:', err);
-      setError('Failed to create adventure. Please try again.');
+      console.error("Error creating adventure:", err);
+      setError("Failed to create adventure. Please try again.");
     }
   };
 

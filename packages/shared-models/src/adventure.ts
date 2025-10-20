@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 // Adventure schema
 export const AdventureSchema = z.object({
@@ -37,7 +37,9 @@ export const ListAdventuresResponseSchema = z.object({
   nextPageToken: z.string().optional(),
 });
 
-export type ListAdventuresResponse = z.infer<typeof ListAdventuresResponseSchema>;
+export type ListAdventuresResponse = z.infer<
+  typeof ListAdventuresResponseSchema
+>;
 
 export const CreateAdventureRequestSchema = z.object({
   title: z.string().min(1),
@@ -45,10 +47,14 @@ export const CreateAdventureRequestSchema = z.object({
   location: z.string().min(1),
 });
 
-export type CreateAdventureRequest = z.infer<typeof CreateAdventureRequestSchema>;
+export type CreateAdventureRequest = z.infer<
+  typeof CreateAdventureRequestSchema
+>;
 
 export const CreateAdventureResponseSchema = z.object({
   adventure: AdventureSchema,
 });
 
-export type CreateAdventureResponse = z.infer<typeof CreateAdventureResponseSchema>;
+export type CreateAdventureResponse = z.infer<
+  typeof CreateAdventureResponseSchema
+>;

@@ -10,11 +10,9 @@ import type {
   DeleteTripRequest,
   DeleteTripResponse,
   Trip,
-} from '@ultimate-adventure/shared-models';
-import {
-  TripSchema,
-} from '@ultimate-adventure/shared-models';
-import { TripDAO } from '@ultimate-adventure/backend-utils';
+} from "@ultimate-adventure/shared-models";
+import { TripSchema } from "@ultimate-adventure/shared-models";
+import { TripDAO } from "@ultimate-adventure/backend-utils";
 
 export const tripService = {
   async getTrip(request: GetTripRequest): Promise<GetTripResponse> {
@@ -26,11 +24,13 @@ export const tripService = {
     return { trip };
   },
 
-  async getAllTrips(_request: GetAllTripsRequest): Promise<GetAllTripsResponse> {
+  async getAllTrips(
+    _request: GetAllTripsRequest,
+  ): Promise<GetAllTripsResponse> {
     const dbTrips = await TripDAO.getAllTrips();
 
     // Validate all trips from DB with Zod
-    const trips: Trip[] = dbTrips.map(trip => TripSchema.parse(trip));
+    const trips: Trip[] = dbTrips.map((trip) => TripSchema.parse(trip));
 
     return { trips };
   },

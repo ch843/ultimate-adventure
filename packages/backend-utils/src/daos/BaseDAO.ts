@@ -1,6 +1,6 @@
-import { getSupabaseClient } from '../supabase-client';
-import type { SupabaseClient } from '@supabase/supabase-js';
-import { TRPCError } from '@trpc/server';
+import { getSupabaseClient } from "../supabase-client";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { TRPCError } from "@trpc/server";
 
 export abstract class BaseDAO<TTable extends string> {
   private _client: SupabaseClient | null = null;
@@ -18,14 +18,14 @@ export abstract class BaseDAO<TTable extends string> {
   public async getById<T>(id: number): Promise<T> {
     const { data, error } = await this.client
       .from(this.tableName)
-      .select('*')
+      .select("*")
       .eq(this.idColumn, id)
       .limit(1);
 
     if (error) {
       console.error(`Error fetching ${this.tableName}:`, error);
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
+        code: "INTERNAL_SERVER_ERROR",
         message: `Failed to fetch ${this.tableName}: ${error.message}`,
         cause: error,
       });
@@ -33,7 +33,7 @@ export abstract class BaseDAO<TTable extends string> {
 
     if (!data || data.length === 0) {
       throw new TRPCError({
-        code: 'NOT_FOUND',
+        code: "NOT_FOUND",
         message: `${this.tableName} with ${this.idColumn} ${id} not found`,
       });
     }
@@ -42,14 +42,12 @@ export abstract class BaseDAO<TTable extends string> {
   }
 
   public async getAll<T>(): Promise<T[]> {
-    const { data, error } = await this.client
-      .from(this.tableName)
-      .select('*');
+    const { data, error } = await this.client.from(this.tableName).select("*");
 
     if (error) {
       console.error(`Error fetching all ${this.tableName}:`, error);
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
+        code: "INTERNAL_SERVER_ERROR",
         message: `Failed to fetch ${this.tableName}: ${error.message}`,
         cause: error,
       });
@@ -68,7 +66,7 @@ export abstract class BaseDAO<TTable extends string> {
     if (error) {
       console.error(`Error creating ${this.tableName}:`, error);
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
+        code: "INTERNAL_SERVER_ERROR",
         message: `Failed to create ${this.tableName}: ${error.message}`,
         cause: error,
       });
@@ -76,7 +74,7 @@ export abstract class BaseDAO<TTable extends string> {
 
     if (!data) {
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
+        code: "INTERNAL_SERVER_ERROR",
         message: `Failed to create ${this.tableName}: No data returned`,
       });
     }
@@ -93,7 +91,7 @@ export abstract class BaseDAO<TTable extends string> {
     if (error) {
       console.error(`Error updating ${this.tableName}:`, error);
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
+        code: "INTERNAL_SERVER_ERROR",
         message: `Failed to update ${this.tableName}: ${error.message}`,
         cause: error,
       });
@@ -109,7 +107,7 @@ export abstract class BaseDAO<TTable extends string> {
     if (error) {
       console.error(`Error deleting ${this.tableName}:`, error);
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
+        code: "INTERNAL_SERVER_ERROR",
         message: `Failed to delete ${this.tableName}: ${error.message}`,
         cause: error,
       });

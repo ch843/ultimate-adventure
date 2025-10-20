@@ -34,7 +34,10 @@ import { Badge } from "@/components/ui/badge";
 import { Trash2, Pencil } from "lucide-react";
 import EditCardForm from "../forms/EditCardForm.tsx";
 import { AddAdventureDialog } from "../dialogs/AddAdventureDialog";
-import { useActivityCards, useDeleteActivityCard } from "../../hooks/useActivityCards";
+import {
+  useActivityCards,
+  useDeleteActivityCard,
+} from "../../hooks/useActivityCards";
 
 const Adventures = () => {
   const { activityCards, isLoading, refetch } = useActivityCards();
@@ -73,21 +76,32 @@ const Adventures = () => {
       setDeleteDialogOpen(false);
       setDeletingCardId(null);
     } catch (error) {
-      console.error('Error deleting adventure:', error);
-      alert('Error deleting adventure. Please try again.');
+      console.error("Error deleting adventure:", error);
+      alert("Error deleting adventure. Please try again.");
     }
   };
 
-  const deletingCard = activityCards.find(card => card.card_id === deletingCardId);
+  const deletingCard = activityCards.find(
+    (card) => card.card_id === deletingCardId,
+  );
 
   const getCategoryBadgeProps = (category: string) => {
     switch (category) {
       case "Canyoneering":
-        return { variant: "default" as const, className: "bg-emerald-600 text-white hover:bg-emerald-700" };
+        return {
+          variant: "default" as const,
+          className: "bg-emerald-600 text-white hover:bg-emerald-700",
+        };
       case "Climbing":
-        return { variant: "default" as const, className: "bg-orange-600 text-white hover:bg-orange-700" };
+        return {
+          variant: "default" as const,
+          className: "bg-orange-600 text-white hover:bg-orange-700",
+        };
       case "Rafting":
-        return { variant: "default" as const, className: "bg-blue-600 text-white hover:bg-blue-700" };
+        return {
+          variant: "default" as const,
+          className: "bg-blue-600 text-white hover:bg-blue-700",
+        };
       default:
         return { variant: "secondary" as const };
     }
@@ -110,7 +124,9 @@ const Adventures = () => {
       {isLoading ? (
         <Card>
           <CardContent className="py-8">
-            <p className="text-center text-muted-foreground">Loading adventures...</p>
+            <p className="text-center text-muted-foreground">
+              Loading adventures...
+            </p>
           </CardContent>
         </Card>
       ) : (
@@ -210,7 +226,8 @@ const Adventures = () => {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete "{deletingCard?.title}". This action cannot be undone.
+              This will permanently delete "{deletingCard?.title}". This action
+              cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -220,7 +237,7 @@ const Adventures = () => {
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               disabled={isDeleting}
             >
-              {isDeleting ? 'Deleting...' : 'Delete'}
+              {isDeleting ? "Deleting..." : "Delete"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

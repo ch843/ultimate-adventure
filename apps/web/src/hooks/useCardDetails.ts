@@ -1,4 +1,4 @@
-import { trpc } from '../utils/trpc';
+import { trpc } from "../utils/trpc";
 
 /**
  * Hook to fetch card details by card ID
@@ -6,7 +6,7 @@ import { trpc } from '../utils/trpc';
 export function useCardDetails(cardId: number) {
   const query = trpc.cardDetails.getActivityDetails.useQuery(
     { cardId },
-    { enabled: cardId > 0 }
+    { enabled: cardId > 0 },
   );
 
   return {

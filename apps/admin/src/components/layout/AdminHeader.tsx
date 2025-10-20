@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@ultimate-adventure/shared-components";
-import logo from '../../assets/Logo.avif';
+import logo from "../../assets/Logo.avif";
 
 const AdminHeader = () => {
   const location = useLocation();
@@ -19,7 +19,9 @@ const AdminHeader = () => {
         <div className="mr-8 flex items-center">
           <Link to="/" className="flex items-center space-x-2">
             <img src={logo} alt="Ultimate Adventure" className="h-10" />
-            <span className="font-semibold text-xl hidden md:inline-block">Admin</span>
+            <span className="font-semibold text-xl hidden md:inline-block">
+              Admin
+            </span>
           </Link>
         </div>
 

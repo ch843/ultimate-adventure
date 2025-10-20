@@ -1,14 +1,30 @@
 import { useState } from "react";
 import Hero from "../sections/Hero.tsx";
 import { Tables } from "../../definitions/generatedDefinitions.ts";
-import { Dialog, DialogContent, Button, Card, CardContent, CardHeader, CardTitle } from "@ultimate-adventure/shared-components";
+import {
+  Dialog,
+  DialogContent,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@ultimate-adventure/shared-components";
 import EditCardForm from "../forms/EditCardForm.tsx";
 import { useActivityCards } from "../../hooks/useActivityCards";
 
-const AdventureCard = ({ card, type, onEdit }: { card: Tables<'Adventure Cards'>, type: string, onEdit: (cardId: number) => void }) => {
+const AdventureCard = ({
+  card,
+  type,
+  onEdit,
+}: {
+  card: Tables<"Adventure Cards">;
+  type: string;
+  onEdit: (cardId: number) => void;
+}) => {
   return (
     <>
-      {card.category === type &&
+      {card.category === type && (
         <Card className="overflow-hidden">
           <img
             src={card.img_link}
@@ -16,12 +32,17 @@ const AdventureCard = ({ card, type, onEdit }: { card: Tables<'Adventure Cards'>
             className="h-70 w-full object-cover"
           />
           <CardHeader>
-            <CardTitle className="text-3xl tracking-wide uppercase">{card.title}</CardTitle>
-            <p className="text-orange-400 text-xl font-light tracking-wide uppercase">{card.location}</p>
+            <CardTitle className="text-3xl tracking-wide uppercase">
+              {card.title}
+            </CardTitle>
+            <p className="text-orange-400 text-xl font-light tracking-wide uppercase">
+              {card.location}
+            </p>
           </CardHeader>
           <CardContent className="space-y-2">
             {card.price_pp && (
-              <p className="font-medium">${card.price_pp} / PERSON
+              <p className="font-medium">
+                ${card.price_pp} / PERSON
                 {card.hourly && <span> / HOUR</span>}
               </p>
             )}
@@ -41,16 +62,13 @@ const AdventureCard = ({ card, type, onEdit }: { card: Tables<'Adventure Cards'>
             {card.max_people && <p>MAX: {card.max_people} PEOPLE</p>}
 
             <div className="flex gap-2 mt-4">
-              <Button
-                onClick={() => onEdit(card.card_id)}
-                size="sm"
-              >
+              <Button onClick={() => onEdit(card.card_id)} size="sm">
                 EDIT
               </Button>
             </div>
           </CardContent>
         </Card>
-      }
+      )}
     </>
   );
 };
@@ -80,8 +98,8 @@ const Book = () => {
   return (
     <>
       <Hero
-        imgUrl='https://ooelvqpdhbpsjsqbrljg.supabase.co/storage/v1/object/public/ultimate-adventure-prod//hikingRocks.avif'
-        title='Choose your adventure'
+        imgUrl="https://ooelvqpdhbpsjsqbrljg.supabase.co/storage/v1/object/public/ultimate-adventure-prod//hikingRocks.avif"
+        title="Choose your adventure"
       />
 
       <div className="container mx-auto py-12 px-4">
@@ -89,12 +107,19 @@ const Book = () => {
           <p className="text-center">Loading adventures...</p>
         ) : (
           <>
-            {activityCategories.map(category => (
+            {activityCategories.map((category) => (
               <section key={category}>
-                <h2 className="text-5xl font my-8 text-center uppercase">{category}</h2>
+                <h2 className="text-5xl font my-8 text-center uppercase">
+                  {category}
+                </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mx-20">
-                  {activityCards.map(card => (
-                    <AdventureCard key={card.card_id} card={card} type={category} onEdit={handleEditCard} />
+                  {activityCards.map((card) => (
+                    <AdventureCard
+                      key={card.card_id}
+                      card={card}
+                      type={category}
+                      onEdit={handleEditCard}
+                    />
                   ))}
                 </div>
               </section>

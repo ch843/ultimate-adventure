@@ -4,364 +4,367 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[]
+  | Json[];
 
 export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "12.2.3 (519615d)"
-  }
+    PostgrestVersion: "12.2.3 (519615d)";
+  };
   graphql_public: {
     Tables: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
       graphql: {
         Args: {
-          extensions?: Json
-          operationName?: string
-          query?: string
-          variables?: Json
-        }
-        Returns: Json
-      }
-    }
+          extensions?: Json;
+          operationName?: string;
+          query?: string;
+          variables?: Json;
+        };
+        Returns: Json;
+      };
+    };
     Enums: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
+      [_ in never]: never;
+    };
+  };
   public: {
     Tables: {
       "Adventure Cards": {
         Row: {
-          active: boolean
-          adult_price: number | null
-          card_id: number
-          category: string
-          child_price: number | null
-          created_at: string
-          full_day_pp: number | null
-          half_day_pp: number | null
-          hourly: boolean
-          img_link: string
-          location: string
-          max_people: number | null
-          min_people: number | null
-          price_pp: number | null
-          title: string
-          updated_at: string | null
-        }
+          active: boolean;
+          adult_price: number | null;
+          card_id: number;
+          category: string;
+          child_price: number | null;
+          created_at: string;
+          full_day_pp: number | null;
+          half_day_pp: number | null;
+          hourly: boolean;
+          img_link: string;
+          location: string;
+          max_people: number | null;
+          min_people: number | null;
+          price_pp: number | null;
+          title: string;
+          updated_at: string | null;
+        };
         Insert: {
-          active: boolean
-          adult_price?: number | null
-          card_id?: number
-          category: string
-          child_price?: number | null
-          created_at?: string
-          full_day_pp?: number | null
-          half_day_pp?: number | null
-          hourly?: boolean
-          img_link: string
-          location: string
-          max_people?: number | null
-          min_people?: number | null
-          price_pp?: number | null
-          title: string
-          updated_at?: string | null
-        }
+          active: boolean;
+          adult_price?: number | null;
+          card_id?: number;
+          category: string;
+          child_price?: number | null;
+          created_at?: string;
+          full_day_pp?: number | null;
+          half_day_pp?: number | null;
+          hourly?: boolean;
+          img_link: string;
+          location: string;
+          max_people?: number | null;
+          min_people?: number | null;
+          price_pp?: number | null;
+          title: string;
+          updated_at?: string | null;
+        };
         Update: {
-          active?: boolean
-          adult_price?: number | null
-          card_id?: number
-          category?: string
-          child_price?: number | null
-          created_at?: string
-          full_day_pp?: number | null
-          half_day_pp?: number | null
-          hourly?: boolean
-          img_link?: string
-          location?: string
-          max_people?: number | null
-          min_people?: number | null
-          price_pp?: number | null
-          title?: string
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
+          active?: boolean;
+          adult_price?: number | null;
+          card_id?: number;
+          category?: string;
+          child_price?: number | null;
+          created_at?: string;
+          full_day_pp?: number | null;
+          half_day_pp?: number | null;
+          hourly?: boolean;
+          img_link?: string;
+          location?: string;
+          max_people?: number | null;
+          min_people?: number | null;
+          price_pp?: number | null;
+          title?: string;
+          updated_at?: string | null;
+        };
+        Relationships: [];
+      };
       "Card Details": {
         Row: {
-          card_id: number
-          details_id: number
-          flood_danger: string | null
-          gallery_img1: string | null
-          gallery_img2: string | null
-          gallery_img3: string | null
-          gear: string | null
-          hype: string | null
-          length: string | null
-          location_id: number | null
-          maps: string | null
-          notes: string | null
-          rappels: string | null
-          rating: string | null
-          season: string | null
-          water: string | null
-        }
+          card_id: number;
+          details_id: number;
+          flood_danger: string | null;
+          gallery_img1: string | null;
+          gallery_img2: string | null;
+          gallery_img3: string | null;
+          gear: string | null;
+          hype: string | null;
+          length: string | null;
+          location_id: number | null;
+          maps: string | null;
+          notes: string | null;
+          rappels: string | null;
+          rating: string | null;
+          season: string | null;
+          water: string | null;
+        };
         Insert: {
-          card_id: number
-          details_id?: number
-          flood_danger?: string | null
-          gallery_img1?: string | null
-          gallery_img2?: string | null
-          gallery_img3?: string | null
-          gear?: string | null
-          hype?: string | null
-          length?: string | null
-          location_id?: number | null
-          maps?: string | null
-          notes?: string | null
-          rappels?: string | null
-          rating?: string | null
-          season?: string | null
-          water?: string | null
-        }
+          card_id: number;
+          details_id?: number;
+          flood_danger?: string | null;
+          gallery_img1?: string | null;
+          gallery_img2?: string | null;
+          gallery_img3?: string | null;
+          gear?: string | null;
+          hype?: string | null;
+          length?: string | null;
+          location_id?: number | null;
+          maps?: string | null;
+          notes?: string | null;
+          rappels?: string | null;
+          rating?: string | null;
+          season?: string | null;
+          water?: string | null;
+        };
         Update: {
-          card_id?: number
-          details_id?: number
-          flood_danger?: string | null
-          gallery_img1?: string | null
-          gallery_img2?: string | null
-          gallery_img3?: string | null
-          gear?: string | null
-          hype?: string | null
-          length?: string | null
-          location_id?: number | null
-          maps?: string | null
-          notes?: string | null
-          rappels?: string | null
-          rating?: string | null
-          season?: string | null
-          water?: string | null
-        }
+          card_id?: number;
+          details_id?: number;
+          flood_danger?: string | null;
+          gallery_img1?: string | null;
+          gallery_img2?: string | null;
+          gallery_img3?: string | null;
+          gear?: string | null;
+          hype?: string | null;
+          length?: string | null;
+          location_id?: number | null;
+          maps?: string | null;
+          notes?: string | null;
+          rappels?: string | null;
+          rating?: string | null;
+          season?: string | null;
+          water?: string | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "Card Details_card_id_fkey"
-            columns: ["card_id"]
-            isOneToOne: false
-            referencedRelation: "Adventure Cards"
-            referencedColumns: ["card_id"]
+            foreignKeyName: "Card Details_card_id_fkey";
+            columns: ["card_id"];
+            isOneToOne: false;
+            referencedRelation: "Adventure Cards";
+            referencedColumns: ["card_id"];
           },
           {
-            foreignKeyName: "Card Details_location_id_fkey"
-            columns: ["location_id"]
-            isOneToOne: false
-            referencedRelation: "Location"
-            referencedColumns: ["location_id"]
+            foreignKeyName: "Card Details_location_id_fkey";
+            columns: ["location_id"];
+            isOneToOne: false;
+            referencedRelation: "Location";
+            referencedColumns: ["location_id"];
           },
-        ]
-      }
+        ];
+      };
       "Club Members": {
         Row: {
-          email: string
-          experience_level: string | null
-          first_name: string
-          group_num: number
-          id: number
-          last_name: string
-          notes: string | null
-          paid_for_year: boolean
-          phone_num: string | null
-          waiver_link: string | null
-        }
+          email: string;
+          experience_level: string | null;
+          first_name: string;
+          group_num: number;
+          id: number;
+          last_name: string;
+          notes: string | null;
+          paid_for_year: boolean;
+          phone_num: string | null;
+          waiver_link: string | null;
+        };
         Insert: {
-          email: string
-          experience_level?: string | null
-          first_name: string
-          group_num: number
-          id?: number
-          last_name: string
-          notes?: string | null
-          paid_for_year?: boolean
-          phone_num?: string | null
-          waiver_link?: string | null
-        }
+          email: string;
+          experience_level?: string | null;
+          first_name: string;
+          group_num: number;
+          id?: number;
+          last_name: string;
+          notes?: string | null;
+          paid_for_year?: boolean;
+          phone_num?: string | null;
+          waiver_link?: string | null;
+        };
         Update: {
-          email?: string
-          experience_level?: string | null
-          first_name?: string
-          group_num?: number
-          id?: number
-          last_name?: string
-          notes?: string | null
-          paid_for_year?: boolean
-          phone_num?: string | null
-          waiver_link?: string | null
-        }
-        Relationships: []
-      }
+          email?: string;
+          experience_level?: string | null;
+          first_name?: string;
+          group_num?: number;
+          id?: number;
+          last_name?: string;
+          notes?: string | null;
+          paid_for_year?: boolean;
+          phone_num?: string | null;
+          waiver_link?: string | null;
+        };
+        Relationships: [];
+      };
       "Contact Form Info": {
         Row: {
-          activity_inquiry_id: number | null
-          created_at: string
-          email: string
-          first_name: string
-          id: number
-          last_name: string
-          message: string
-          phone: string | null
-        }
+          activity_inquiry_id: number | null;
+          created_at: string;
+          email: string;
+          first_name: string;
+          id: number;
+          last_name: string;
+          message: string;
+          phone: string | null;
+        };
         Insert: {
-          activity_inquiry_id?: number | null
-          created_at?: string
-          email: string
-          first_name: string
-          id?: number
-          last_name: string
-          message: string
-          phone?: string | null
-        }
+          activity_inquiry_id?: number | null;
+          created_at?: string;
+          email: string;
+          first_name: string;
+          id?: number;
+          last_name: string;
+          message: string;
+          phone?: string | null;
+        };
         Update: {
-          activity_inquiry_id?: number | null
-          created_at?: string
-          email?: string
-          first_name?: string
-          id?: number
-          last_name?: string
-          message?: string
-          phone?: string | null
-        }
+          activity_inquiry_id?: number | null;
+          created_at?: string;
+          email?: string;
+          first_name?: string;
+          id?: number;
+          last_name?: string;
+          message?: string;
+          phone?: string | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "Contact Form Info_activity_inquiry_id_fkey"
-            columns: ["activity_inquiry_id"]
-            isOneToOne: false
-            referencedRelation: "Adventure Cards"
-            referencedColumns: ["card_id"]
+            foreignKeyName: "Contact Form Info_activity_inquiry_id_fkey";
+            columns: ["activity_inquiry_id"];
+            isOneToOne: false;
+            referencedRelation: "Adventure Cards";
+            referencedColumns: ["card_id"];
           },
-        ]
-      }
+        ];
+      };
       Location: {
         Row: {
-          location: string
-          location_id: number
-          title: string
-        }
+          location: string;
+          location_id: number;
+          title: string;
+        };
         Insert: {
-          location: string
-          location_id?: number
-          title: string
-        }
+          location: string;
+          location_id?: number;
+          title: string;
+        };
         Update: {
-          location?: string
-          location_id?: number
-          title?: string
-        }
-        Relationships: []
-      }
+          location?: string;
+          location_id?: number;
+          title?: string;
+        };
+        Relationships: [];
+      };
       "Trip Members": {
         Row: {
-          id: number
-          member_id: number
-          trip_id: number
-        }
+          id: number;
+          member_id: number;
+          trip_id: number;
+        };
         Insert: {
-          id?: number
-          member_id: number
-          trip_id: number
-        }
+          id?: number;
+          member_id: number;
+          trip_id: number;
+        };
         Update: {
-          id?: number
-          member_id?: number
-          trip_id?: number
-        }
+          id?: number;
+          member_id?: number;
+          trip_id?: number;
+        };
         Relationships: [
           {
-            foreignKeyName: "Trip Members_member_id_fkey"
-            columns: ["member_id"]
-            isOneToOne: false
-            referencedRelation: "Club Members"
-            referencedColumns: ["id"]
+            foreignKeyName: "Trip Members_member_id_fkey";
+            columns: ["member_id"];
+            isOneToOne: false;
+            referencedRelation: "Club Members";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "Trip Members_trip_id_fkey"
-            columns: ["trip_id"]
-            isOneToOne: false
-            referencedRelation: "Trips"
-            referencedColumns: ["id"]
+            foreignKeyName: "Trip Members_trip_id_fkey";
+            columns: ["trip_id"];
+            isOneToOne: false;
+            referencedRelation: "Trips";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       Trips: {
         Row: {
-          date_end: string
-          date_start: string
-          group_num: number
-          id: number
-          location: string
-          title: string
-        }
+          date_end: string;
+          date_start: string;
+          group_num: number;
+          id: number;
+          location: string;
+          title: string;
+        };
         Insert: {
-          date_end: string
-          date_start: string
-          group_num: number
-          id?: number
-          location: string
-          title: string
-        }
+          date_end: string;
+          date_start: string;
+          group_num: number;
+          id?: number;
+          location: string;
+          title: string;
+        };
         Update: {
-          date_end?: string
-          date_start?: string
-          group_num?: number
-          id?: number
-          location?: string
-          title?: string
-        }
-        Relationships: []
-      }
-    }
+          date_end?: string;
+          date_start?: string;
+          group_num?: number;
+          id?: number;
+          location?: string;
+          title?: string;
+        };
+        Relationships: [];
+      };
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Enums: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-}
+      [_ in never]: never;
+    };
+  };
+};
 
-type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">;
 
-type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+type DefaultSchema = DatabaseWithoutInternals[Extract<
+  keyof Database,
+  "public"
+>];
 
 export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
     : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
       DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R
+      Row: infer R;
     }
     ? R
     : never
@@ -369,95 +372,95 @@ export type Tables<
         DefaultSchema["Views"])
     ? (DefaultSchema["Tables"] &
         DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
-        Row: infer R
+        Row: infer R;
       }
       ? R
       : never
-    : never
+    : never;
 
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
+      Insert: infer I;
     }
     ? I
     : never
   : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
     ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Insert: infer I
+        Insert: infer I;
       }
       ? I
       : never
-    : never
+    : never;
 
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
+      Update: infer U;
     }
     ? U
     : never
   : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
     ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Update: infer U
+        Update: infer U;
       }
       ? U
       : never
-    : never
+    : never;
 
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
     | { schema: keyof DatabaseWithoutInternals },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
 > = DefaultSchemaEnumNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
     ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
-    : never
+    : never;
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never = never,
 > = PublicCompositeTypeNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
   : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
     ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
-    : never
+    : never;
 
 export const Constants = {
   graphql_public: {
@@ -466,4 +469,4 @@ export const Constants = {
   public: {
     Enums: {},
   },
-} as const
+} as const;

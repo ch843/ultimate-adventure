@@ -1,4 +1,4 @@
-import { trpc } from '../utils/trpc';
+import { trpc } from "../utils/trpc";
 
 /**
  * Hook to fetch all activity cards
@@ -20,7 +20,7 @@ export function useActivityCards() {
 export function useActivityCard(id: number) {
   const query = trpc.activityCard.getActivityCard.useQuery(
     { id },
-    { enabled: id > 0 }
+    { enabled: id > 0 },
   );
 
   return {

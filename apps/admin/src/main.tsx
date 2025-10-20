@@ -1,11 +1,11 @@
-import { StrictMode, useState } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import { StrictMode, useState } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.tsx";
+import "./index.css";
 import { BrowserRouter } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { httpBatchLink } from '@trpc/client';
-import { trpc } from './utils/trpc';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { httpBatchLink } from "@trpc/client";
+import { trpc } from "./utils/trpc";
 
 function Root() {
   const [queryClient] = useState(() => new QueryClient());
@@ -13,10 +13,10 @@ function Root() {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: import.meta.env.VITE_API_URL || 'http://localhost:3002/trpc',
+          url: import.meta.env.VITE_API_URL || "http://localhost:3002/trpc",
         }),
       ],
-    })
+    }),
   );
 
   return (
@@ -32,4 +32,4 @@ function Root() {
   );
 }
 
-createRoot(document.getElementById('root')!).render(<Root />)
+createRoot(document.getElementById("root")!).render(<Root />);

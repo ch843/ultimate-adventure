@@ -1,4 +1,4 @@
-import { trpc } from '../utils/trpc';
+import { trpc } from "../utils/trpc";
 
 /**
  * Hook to fetch all club members
@@ -20,7 +20,7 @@ export function useClubMembers() {
 export function useClubMember(id: number) {
   const query = trpc.clubMember.getClubMember.useQuery(
     { id },
-    { enabled: id > 0 }
+    { enabled: id > 0 },
   );
 
   return {

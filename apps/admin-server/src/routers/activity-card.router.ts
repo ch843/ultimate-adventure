@@ -1,12 +1,12 @@
-import { router, publicProcedure } from '@ultimate-adventure/backend-utils';
+import { router, publicProcedure } from "@ultimate-adventure/backend-utils";
 import {
   GetActivityCardRequestSchema,
   GetAllActivityCardsRequestSchema,
   CreateActivityCardRequestSchema,
   UpdateActivityCardRequestSchema,
   DeleteActivityCardRequestSchema,
-} from '@ultimate-adventure/shared-models';
-import { activityCardService } from '../services/activity-card.service';
+} from "@ultimate-adventure/shared-models";
+import { activityCardService } from "../services/activity-card.service";
 
 export const activityCardRouter = router({
   getActivityCard: publicProcedure

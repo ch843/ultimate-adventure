@@ -1,10 +1,16 @@
-import { useState } from 'react';
-import { useActivityCard, useDeleteActivityCard } from '../../hooks/useActivityCards';
-import { useCardDetails, useUpdateCardDetails } from '../../hooks/useCardDetails';
-import { useUpdateActivityCard } from '../../hooks/useActivityCards';
-import { Spinner } from '@/components/ui/spinner';
-import { Button } from '@ultimate-adventure/shared-components';
-import { AdventureForm, AdventureFormData } from './AdventureForm';
+import { useState } from "react";
+import {
+  useActivityCard,
+  useDeleteActivityCard,
+} from "../../hooks/useActivityCards";
+import {
+  useCardDetails,
+  useUpdateCardDetails,
+} from "../../hooks/useCardDetails";
+import { useUpdateActivityCard } from "../../hooks/useActivityCards";
+import { Spinner } from "@/components/ui/spinner";
+import { Button } from "@ultimate-adventure/shared-components";
+import { AdventureForm, AdventureFormData } from "./AdventureForm";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,7 +20,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+} from "@/components/ui/alert-dialog";
 
 interface EditCardFormProps {
   cardId: number;
@@ -23,10 +29,14 @@ interface EditCardFormProps {
 }
 
 const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
-  const { activityCard: card, isLoading: cardLoading } = useActivityCard(cardId);
-  const { cardDetails: details, isLoading: detailsLoading } = useCardDetails(cardId);
-  const { updateActivityCard, isUpdating: isUpdatingCard } = useUpdateActivityCard();
-  const { updateCardDetails, isUpdating: isUpdatingDetails } = useUpdateCardDetails();
+  const { activityCard: card, isLoading: cardLoading } =
+    useActivityCard(cardId);
+  const { cardDetails: details, isLoading: detailsLoading } =
+    useCardDetails(cardId);
+  const { updateActivityCard, isUpdating: isUpdatingCard } =
+    useUpdateActivityCard();
+  const { updateCardDetails, isUpdating: isUpdatingDetails } =
+    useUpdateCardDetails();
   const { deleteActivityCardAsync, isDeleting } = useDeleteActivityCard();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
@@ -47,22 +57,30 @@ const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
             category: value.category,
             img_link: value.img_link,
             price_pp: value.price_pp ? parseFloat(value.price_pp) : null,
-            adult_price: value.adult_price ? parseFloat(value.adult_price) : null,
-            child_price: value.child_price ? parseFloat(value.child_price) : null,
-            half_day_pp: value.half_day_pp ? parseFloat(value.half_day_pp) : null,
-            full_day_pp: value.full_day_pp ? parseFloat(value.full_day_pp) : null,
+            adult_price: value.adult_price
+              ? parseFloat(value.adult_price)
+              : null,
+            child_price: value.child_price
+              ? parseFloat(value.child_price)
+              : null,
+            half_day_pp: value.half_day_pp
+              ? parseFloat(value.half_day_pp)
+              : null,
+            full_day_pp: value.full_day_pp
+              ? parseFloat(value.full_day_pp)
+              : null,
             min_people: value.min_people ? parseInt(value.min_people) : null,
             max_people: value.max_people ? parseInt(value.max_people) : null,
             hourly: value.hourly,
-            active: value.active
-          }
+            active: value.active,
+          },
         },
         {
           onError: (error) => {
-            console.error('Error saving card:', error);
-            alert('Error saving card. Please try again.');
-          }
-        }
+            console.error("Error saving card:", error);
+            alert("Error saving card. Please try again.");
+          },
+        },
       );
 
       // Update card details if they exist
@@ -84,21 +102,21 @@ const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
               gallery_img1: value.gallery_img1,
               gallery_img2: value.gallery_img2,
               gallery_img3: value.gallery_img3,
-            }
+            },
           },
           {
             onError: (error) => {
-              console.error('Error saving card details:', error);
-              alert('Error saving card details. Please try again.');
-            }
-          }
+              console.error("Error saving card details:", error);
+              alert("Error saving card details. Please try again.");
+            },
+          },
         );
       }
 
       onSave();
       onClose();
     } catch (error) {
-      console.error('Error saving:', error);
+      console.error("Error saving:", error);
     }
   };
 
@@ -108,8 +126,8 @@ const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
       onSave();
       onClose();
     } catch (error) {
-      console.error('Error deleting adventure:', error);
-      alert('Error deleting adventure. Please try again.');
+      console.error("Error deleting adventure:", error);
+      alert("Error deleting adventure. Please try again.");
     }
   };
 
@@ -123,32 +141,32 @@ const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
   }
 
   const initialValues = {
-    title: card?.title || '',
-    location: card?.location || '',
-    category: card?.category || '',
-    img_link: card?.img_link || '',
-    price_pp: card?.price_pp?.toString() || '',
-    adult_price: card?.adult_price?.toString() || '',
-    child_price: card?.child_price?.toString() || '',
-    half_day_pp: card?.half_day_pp?.toString() || '',
-    full_day_pp: card?.full_day_pp?.toString() || '',
-    min_people: card?.min_people?.toString() || '',
-    max_people: card?.max_people?.toString() || '',
+    title: card?.title || "",
+    location: card?.location || "",
+    category: card?.category || "",
+    img_link: card?.img_link || "",
+    price_pp: card?.price_pp?.toString() || "",
+    adult_price: card?.adult_price?.toString() || "",
+    child_price: card?.child_price?.toString() || "",
+    half_day_pp: card?.half_day_pp?.toString() || "",
+    full_day_pp: card?.full_day_pp?.toString() || "",
+    min_people: card?.min_people?.toString() || "",
+    max_people: card?.max_people?.toString() || "",
     hourly: card?.hourly || false,
     active: card?.active ?? true,
-    hype: details?.hype || '',
-    gear: details?.gear || '',
-    length: details?.length || '',
-    season: details?.season || '',
-    rating: details?.rating || '',
-    water: details?.water || '',
-    flood_danger: details?.flood_danger || '',
-    rappels: details?.rappels || '',
-    notes: details?.notes || '',
-    maps: details?.maps || '',
-    gallery_img1: details?.gallery_img1 || '',
-    gallery_img2: details?.gallery_img2 || '',
-    gallery_img3: details?.gallery_img3 || '',
+    hype: details?.hype || "",
+    gear: details?.gear || "",
+    length: details?.length || "",
+    season: details?.season || "",
+    rating: details?.rating || "",
+    water: details?.water || "",
+    flood_danger: details?.flood_danger || "",
+    rappels: details?.rappels || "",
+    notes: details?.notes || "",
+    maps: details?.maps || "",
+    gallery_img1: details?.gallery_img1 || "",
+    gallery_img2: details?.gallery_img2 || "",
+    gallery_img3: details?.gallery_img3 || "",
   };
 
   return (
@@ -160,7 +178,7 @@ const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
           onClick={() => setShowDeleteDialog(true)}
           disabled={isDeleting}
         >
-          {isDeleting ? 'Deleting...' : 'Delete'}
+          {isDeleting ? "Deleting..." : "Delete"}
         </Button>
       </div>
       <AdventureForm
@@ -176,12 +194,16 @@ const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete "{card?.title}". This action cannot be undone.
+              This will permanently delete "{card?.title}". This action cannot
+              be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>

@@ -1,7 +1,7 @@
-import { getSupabaseClient } from '../supabase-client';
-import type { Tables } from '@ultimate-adventure/shared-models';
-import type { SupabaseClient } from '@supabase/supabase-js';
-import { TRPCError } from '@trpc/server';
+import { getSupabaseClient } from "../supabase-client";
+import type { Tables } from "@ultimate-adventure/shared-models";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { TRPCError } from "@trpc/server";
 
 class _ActivityCardDAO {
   private _client: SupabaseClient | null = null;
@@ -13,17 +13,17 @@ class _ActivityCardDAO {
     return this._client;
   }
 
-  public async getActivityCard(id: number): Promise<Tables<'Adventure Cards'>> {
+  public async getActivityCard(id: number): Promise<Tables<"Adventure Cards">> {
     const { data, error } = await this.client
-      .from('Adventure Cards')
-      .select('*')
-      .eq('card_id', id)
+      .from("Adventure Cards")
+      .select("*")
+      .eq("card_id", id)
       .limit(1);
 
     if (error) {
-      console.error('Error fetching activity card:', error);
+      console.error("Error fetching activity card:", error);
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
+        code: "INTERNAL_SERVER_ERROR",
         message: `Failed to fetch activity card: ${error.message}`,
         cause: error,
       });
@@ -31,7 +31,7 @@ class _ActivityCardDAO {
 
     if (!data || data.length === 0) {
       throw new TRPCError({
-        code: 'NOT_FOUND',
+        code: "NOT_FOUND",
         message: `Activity card with id ${id} not found`,
       });
     }
@@ -39,15 +39,15 @@ class _ActivityCardDAO {
     return data[0];
   }
 
-  public async getAllActivityCards(): Promise<Tables<'Adventure Cards'>[]> {
+  public async getAllActivityCards(): Promise<Tables<"Adventure Cards">[]> {
     const { data, error } = await this.client
-      .from('Adventure Cards')
-      .select('*');
+      .from("Adventure Cards")
+      .select("*");
 
     if (error) {
-      console.error('Error fetching all activity cards:', error);
+      console.error("Error fetching all activity cards:", error);
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
+        code: "INTERNAL_SERVER_ERROR",
         message: `Failed to fetch activity cards: ${error.message}`,
         cause: error,
       });
@@ -57,18 +57,21 @@ class _ActivityCardDAO {
   }
 
   public async createActivityCard(
-    cardData: Omit<Tables<'Adventure Cards'>, 'card_id' | 'created_at' | 'updated_at'>
-  ): Promise<Tables<'Adventure Cards'>> {
+    cardData: Omit<
+      Tables<"Adventure Cards">,
+      "card_id" | "created_at" | "updated_at"
+    >,
+  ): Promise<Tables<"Adventure Cards">> {
     const { data, error } = await this.client
-      .from('Adventure Cards')
+      .from("Adventure Cards")
       .insert({ ...cardData, active: true })
       .select()
       .single();
 
     if (error) {
-      console.error('Error creating activity card:', error);
+      console.error("Error creating activity card:", error);
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
+        code: "INTERNAL_SERVER_ERROR",
         message: `Failed to create activity card: ${error.message}`,
         cause: error,
       });
@@ -76,8 +79,8 @@ class _ActivityCardDAO {
 
     if (!data) {
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
-        message: 'Failed to create activity card: No data returned',
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to create activity card: No data returned",
       });
     }
 
@@ -86,17 +89,17 @@ class _ActivityCardDAO {
 
   public async updateActivityCard(
     id: number,
-    updateData: Partial<Tables<'Adventure Cards'>>
+    updateData: Partial<Tables<"Adventure Cards">>,
   ): Promise<void> {
     const { error } = await this.client
-      .from('Adventure Cards')
+      .from("Adventure Cards")
       .update(updateData)
-      .eq('card_id', id);
+      .eq("card_id", id);
 
     if (error) {
-      console.error('Error updating activity card:', error);
+      console.error("Error updating activity card:", error);
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
+        code: "INTERNAL_SERVER_ERROR",
         message: `Failed to update activity card: ${error.message}`,
         cause: error,
       });
@@ -105,14 +108,14 @@ class _ActivityCardDAO {
 
   public async deleteActivityCard(id: number): Promise<void> {
     const { error } = await this.client
-      .from('Adventure Cards')
+      .from("Adventure Cards")
       .delete()
-      .eq('card_id', id);
+      .eq("card_id", id);
 
     if (error) {
-      console.error('Error deleting activity card:', error);
+      console.error("Error deleting activity card:", error);
       throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
+        code: "INTERNAL_SERVER_ERROR",
         message: `Failed to delete activity card: ${error.message}`,
         cause: error,
       });

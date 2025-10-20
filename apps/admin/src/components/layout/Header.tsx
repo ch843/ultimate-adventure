@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@ultimate-adventure/shared-components";
-import logo from '../../assets/Logo.avif';
+import logo from "../../assets/Logo.avif";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const linkStyle = 'text-white hover:text-orange-400 active:text-orange-400 mx-5 font-semibold'
+  const linkStyle =
+    "text-white hover:text-orange-400 active:text-orange-400 mx-5 font-semibold";
 
   return (
     <header className="fixed w-full bg-gray-800 shadow-md z-50">
@@ -15,12 +16,16 @@ const Header = () => {
           <Link to="/">
             <img src={logo} alt="Mountain Logo" className="h-fit" />
           </Link>
-          <Link to="/" className={linkStyle}>HOME</Link>
-          <Link to="/about" className={linkStyle}>ABOUT</Link>
+          <Link to="/" className={linkStyle}>
+            HOME
+          </Link>
+          <Link to="/about" className={linkStyle}>
+            ABOUT
+          </Link>
         </nav>
       </div>
 
-      <div className='md:hidden w-full px-4 py-3 flex justify-between items-center'>
+      <div className="md:hidden w-full px-4 py-3 flex justify-between items-center">
         <img src={logo} alt="Mountain Logo" className="h-12" />
 
         {/* Mobile menu button */}
@@ -37,9 +42,19 @@ const Header = () => {
             xmlns="http://www.w3.org/2000/svg"
           >
             {isMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             )}
           </svg>
         </Button>
@@ -49,8 +64,12 @@ const Header = () => {
       {isMenuOpen && (
         <nav className="md:hidden bg-gray-800 px-4 pt-4 pb-6 shadow-inner justify-between">
           <div className="flex flex-col space-y-3">
-            <Link to="/" className={linkStyle}>HOME</Link>
-            <Link to="/about" className={linkStyle}>ABOUT</Link>
+            <Link to="/" className={linkStyle}>
+              HOME
+            </Link>
+            <Link to="/about" className={linkStyle}>
+              ABOUT
+            </Link>
           </div>
         </nav>
       )}

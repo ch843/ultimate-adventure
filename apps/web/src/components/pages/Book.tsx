@@ -1,13 +1,25 @@
 import Hero from "../sections/Hero.tsx";
 import { Tables } from "../../definitions/generatedDefinitions.ts";
-import { Card, CardContent, CardHeader, CardTitle, Button } from "@ultimate-adventure/shared-components";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Button,
+} from "@ultimate-adventure/shared-components";
 import ContactForm from "../sections/ContactForm.tsx";
 import { useActivityCards } from "../../hooks/useActivityCards";
 
-const AdventureCard = ({ card, type }: { card: Tables<'Adventure Cards'>, type: string }) => {
+const AdventureCard = ({
+  card,
+  type,
+}: {
+  card: Tables<"Adventure Cards">;
+  type: string;
+}) => {
   return (
     <>
-      {card.category === type &&
+      {card.category === type && (
         <Card className="overflow-hidden">
           <img
             src={card.img_link}
@@ -15,12 +27,17 @@ const AdventureCard = ({ card, type }: { card: Tables<'Adventure Cards'>, type: 
             className="h-70 w-full object-cover"
           />
           <CardHeader>
-            <CardTitle className="text-3xl tracking-wide uppercase">{card.title}</CardTitle>
-            <p className="text-orange-400 text-xl font-light tracking-wide uppercase">{card.location}</p>
+            <CardTitle className="text-3xl tracking-wide uppercase">
+              {card.title}
+            </CardTitle>
+            <p className="text-orange-400 text-xl font-light tracking-wide uppercase">
+              {card.location}
+            </p>
           </CardHeader>
           <CardContent className="space-y-2">
             {card.price_pp && (
-              <p className="font-medium">${card.price_pp} / PERSON
+              <p className="font-medium">
+                ${card.price_pp} / PERSON
                 {card.hourly && <span> / HOUR</span>}
               </p>
             )}
@@ -48,7 +65,7 @@ const AdventureCard = ({ card, type }: { card: Tables<'Adventure Cards'>, type: 
             </Button>
           </CardContent>
         </Card>
-      }
+      )}
     </>
   );
 };
@@ -61,8 +78,8 @@ const Book = () => {
   return (
     <>
       <Hero
-        imgUrl='https://ooelvqpdhbpsjsqbrljg.supabase.co/storage/v1/object/public/ultimate-adventure-prod//hikingRocks.avif'
-        title='Choose your adventure'
+        imgUrl="https://ooelvqpdhbpsjsqbrljg.supabase.co/storage/v1/object/public/ultimate-adventure-prod//hikingRocks.avif"
+        title="Choose your adventure"
       />
 
       <div className="container mx-auto py-12 px-4">
@@ -70,12 +87,18 @@ const Book = () => {
           <p className="text-center">Loading adventures...</p>
         ) : (
           <>
-            {activityCategories.map(category => (
+            {activityCategories.map((category) => (
               <section key={category}>
-                <h2 className="text-5xl font my-8 text-center uppercase">{category}</h2>
+                <h2 className="text-5xl font my-8 text-center uppercase">
+                  {category}
+                </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mx-20">
-                  {activityCards.map(card => (
-                    <AdventureCard key={card.card_id} card={card} type={category} />
+                  {activityCards.map((card) => (
+                    <AdventureCard
+                      key={card.card_id}
+                      card={card}
+                      type={category}
+                    />
                   ))}
                 </div>
               </section>

@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 // Contact Form Schema
 export const ContactFormInfoSchema = z.object({
@@ -24,11 +24,15 @@ export const SubmitContactFormRequestSchema = z.object({
   message: z.string().min(1),
 });
 
-export type SubmitContactFormRequest = z.infer<typeof SubmitContactFormRequestSchema>;
+export type SubmitContactFormRequest = z.infer<
+  typeof SubmitContactFormRequestSchema
+>;
 
 export const SubmitContactFormResponseSchema = z.object({
   success: z.boolean(),
   id: z.number(),
 });
 
-export type SubmitContactFormResponse = z.infer<typeof SubmitContactFormResponseSchema>;
+export type SubmitContactFormResponse = z.infer<
+  typeof SubmitContactFormResponseSchema
+>;

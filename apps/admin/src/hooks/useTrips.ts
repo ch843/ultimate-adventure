@@ -1,4 +1,4 @@
-import { trpc } from '../utils/trpc';
+import { trpc } from "../utils/trpc";
 
 /**
  * Hook to fetch all trips
@@ -18,10 +18,7 @@ export function useTrips() {
  * Hook to fetch a single trip by ID
  */
 export function useTrip(id: number) {
-  const query = trpc.trip.getTrip.useQuery(
-    { id },
-    { enabled: id > 0 }
-  );
+  const query = trpc.trip.getTrip.useQuery({ id }, { enabled: id > 0 });
 
   return {
     trip: query.data?.trip,

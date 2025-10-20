@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 // Trip Schema
 export const TripSchema = z.object({

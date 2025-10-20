@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { useState } from 'react';
-import { SubmitContactFormRequest } from '@ultimate-adventure/shared-models';
-import { useActivityCards } from '../../hooks/useActivityCards';
-import { useSubmitContactForm } from '../../hooks/useContactForm';
+import * as React from "react";
+import { useState } from "react";
+import { SubmitContactFormRequest } from "@ultimate-adventure/shared-models";
+import { useActivityCards } from "../../hooks/useActivityCards";
+import { useSubmitContactForm } from "../../hooks/useContactForm";
 import {
   Button,
   Input,
@@ -15,7 +15,7 @@ import {
   SelectValue,
   Alert,
   AlertDescription,
-} from '@ultimate-adventure/shared-components';
+} from "@ultimate-adventure/shared-components";
 
 const formDataDefaults: SubmitContactFormRequest = {
   first_name: "",
@@ -24,19 +24,15 @@ const formDataDefaults: SubmitContactFormRequest = {
   phone: null,
   activity_inquiry_id: null,
   message: "",
-}
+};
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState<SubmitContactFormRequest>(formDataDefaults);
+  const [formData, setFormData] =
+    useState<SubmitContactFormRequest>(formDataDefaults);
 
   const { activityCards } = useActivityCards();
-  const {
-    submitContactForm,
-    isSubmitting,
-    isSuccess,
-    isError,
-    error,
-  } = useSubmitContactForm();
+  const { submitContactForm, isSubmitting, isSuccess, isError, error } =
+    useSubmitContactForm();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,8 +43,8 @@ const ContactForm = () => {
         setFormData(formDataDefaults);
       },
       onError: (error) => {
-        console.error('Error submitting form:', error);
-      }
+        console.error("Error submitting form:", error);
+      },
     });
   };
 
@@ -57,9 +53,13 @@ const ContactForm = () => {
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="flex flex-col md:flex-row bg-white rounded-lg overflow-hidden shadow-lg">
           {/* Left Side - Adventure Image */}
-          <div className="md:w-1/2 bg-cover bg-center"
-               style={{ backgroundImage: "url('https://ooelvqpdhbpsjsqbrljg.supabase.co/storage/v1/object/public/ultimate-adventure-prod/canyon-rock-img.avif')" }}>
-          </div>
+          <div
+            className="md:w-1/2 bg-cover bg-center"
+            style={{
+              backgroundImage:
+                "url('https://ooelvqpdhbpsjsqbrljg.supabase.co/storage/v1/object/public/ultimate-adventure-prod/canyon-rock-img.avif')",
+            }}
+          ></div>
 
           {/* Right Side - Contact Form */}
           <div className="md:w-1/2 p-8">
@@ -76,7 +76,8 @@ const ContactForm = () => {
             {isError && (
               <Alert variant="destructive" className="mb-4">
                 <AlertDescription>
-                  {error?.message || 'Failed to submit form. Please try again later.'}
+                  {error?.message ||
+                    "Failed to submit form. Please try again later."}
                 </AlertDescription>
               </Alert>
             )}
@@ -97,8 +98,9 @@ const ContactForm = () => {
                       const newVal = e.target.value;
                       setFormData((prev) => ({
                         ...prev,
-                        first_name: newVal
-                      }))}}
+                        first_name: newVal,
+                      }));
+                    }}
                   />
                 </div>
 
@@ -116,8 +118,9 @@ const ContactForm = () => {
                       const newVal = e.target.value;
                       setFormData((prev) => ({
                         ...prev,
-                        last_name: newVal
-                      }))}}
+                        last_name: newVal,
+                      }));
+                    }}
                   />
                 </div>
               </div>
@@ -136,8 +139,9 @@ const ContactForm = () => {
                     const newVal = e.target.value;
                     setFormData((prev) => ({
                       ...prev,
-                      email: newVal
-                    }))}}
+                      email: newVal,
+                    }));
+                  }}
                 />
               </div>
 
@@ -152,8 +156,9 @@ const ContactForm = () => {
                     const newVal = e.target.value;
                     setFormData((prev) => ({
                       ...prev,
-                      phone: newVal
-                    }))}}
+                      phone: newVal,
+                    }));
+                  }}
                 />
               </div>
 
@@ -164,15 +169,19 @@ const ContactForm = () => {
                   onValueChange={(value) => {
                     setFormData((prev) => ({
                       ...prev,
-                      activity_inquiry_id: value ? Number(value) : null
-                    }))}}
+                      activity_inquiry_id: value ? Number(value) : null,
+                    }));
+                  }}
                 >
                   <SelectTrigger id="activityType">
                     <SelectValue placeholder="Choose an activity..." />
                   </SelectTrigger>
                   <SelectContent>
                     {activityCards.map((activity) => (
-                      <SelectItem key={activity.card_id} value={activity.card_id.toString()}>
+                      <SelectItem
+                        key={activity.card_id}
+                        value={activity.card_id.toString()}
+                      >
                         {activity.title.toUpperCase()}
                       </SelectItem>
                     ))}
@@ -194,8 +203,9 @@ const ContactForm = () => {
                     const newVal = e.target.value;
                     setFormData((prev) => ({
                       ...prev,
-                      message: newVal
-                    }))}}
+                      message: newVal,
+                    }));
+                  }}
                   placeholder="Tell us about your inquiry or what you're interested in booking..."
                 />
               </div>
@@ -206,7 +216,7 @@ const ContactForm = () => {
                 className="w-full"
                 size="lg"
               >
-                {isSubmitting ? 'Submitting...' : 'Submit'}
+                {isSubmitting ? "Submitting..." : "Submit"}
               </Button>
             </form>
           </div>
