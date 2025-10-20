@@ -14,11 +14,13 @@
     "dev:web-server": "turbo run dev --filter=@ultimate-adventure/web-server",
     "dev:admin-server": "turbo run dev --filter=@ultimate-adventure/admin-server",
     "dev:servers": "turbo run dev --filter=@ultimate-adventure/web-server --filter=@ultimate-adventure/admin-server",
+    "services": "turbo run dev --filter=@ultimate-adventure/web --filter=@ultimate-adventure/admin --filter=@ultimate-adventure/web-server --filter=@ultimate-adventure/admin-server",
     "lint": "turbo run lint",
     "type-check": "turbo run type-check",
     "clean": "turbo run clean"
   },
   "devDependencies": {
+    "shadcn": "^3.4.2",
     "turbo": "^2.3.4"
   },
   "packageManager": "npm@10.2.4",

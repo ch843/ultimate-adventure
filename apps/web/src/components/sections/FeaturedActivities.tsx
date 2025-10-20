@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom";
+import { Card } from "@ultimate-adventure/shared-components";
 
 interface Activity {
   id: number;
@@ -31,16 +32,16 @@ const featuredActivities = [
 
 const FeaturedActivityCard = ({ activity }: { activity: Activity }) => {
   return (
-    <div className="group cursor-pointer overflow-hidden rounded-lg shadow-lg relative h-80">
+    <Card className="group cursor-pointer overflow-hidden relative h-80">
       {/* Background image with overlay */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
         style={{
           backgroundImage: `url(${activity.imgPath})`,
         }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent transition-opacity duration-300"></div>
-      
+
       {/* Content */}
       <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
           <Link to="/book">
@@ -51,7 +52,7 @@ const FeaturedActivityCard = ({ activity }: { activity: Activity }) => {
                   </svg></h3>
           </Link>
       </div>
-    </div>
+    </Card>
   );
 };
 

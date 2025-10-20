@@ -32,6 +32,29 @@ export function useActivityCard(id: number) {
 }
 
 /**
+ * Hook to create an activity card
+ */
+export function useCreateActivityCard() {
+  const utils = trpc.useUtils();
+  const mutation = trpc.activityCard.createActivityCard.useMutation({
+    onSuccess: () => {
+      // Invalidate and refetch activity cards after creation
+      utils.activityCard.getAllActivityCards.invalidate();
+    },
+  });
+
+  return {
+    createActivityCard: mutation.mutate,
+    createActivityCardAsync: mutation.mutateAsync,
+    isCreating: mutation.isPending,
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    error: mutation.error,
+    reset: mutation.reset,
+  };
+}
+
+/**
  * Hook to update an activity card
  */
 export function useUpdateActivityCard() {
@@ -47,6 +70,29 @@ export function useUpdateActivityCard() {
     updateActivityCard: mutation.mutate,
     updateActivityCardAsync: mutation.mutateAsync,
     isUpdating: mutation.isPending,
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    error: mutation.error,
+    reset: mutation.reset,
+  };
+}
+
+/**
+ * Hook to delete an activity card
+ */
+export function useDeleteActivityCard() {
+  const utils = trpc.useUtils();
+  const mutation = trpc.activityCard.deleteActivityCard.useMutation({
+    onSuccess: () => {
+      // Invalidate and refetch activity cards after deletion
+      utils.activityCard.getAllActivityCards.invalidate();
+    },
+  });
+
+  return {
+    deleteActivityCard: mutation.mutate,
+    deleteActivityCardAsync: mutation.mutateAsync,
+    isDeleting: mutation.isPending,
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     error: mutation.error,

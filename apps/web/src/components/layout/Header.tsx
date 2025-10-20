@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {Link} from "react-router-dom";
+import { Button } from "@ultimate-adventure/shared-components";
 import logo from '../../assets/Logo.avif';
 
 const Header = () => {
@@ -25,8 +26,9 @@ const Header = () => {
                 <img src={logo} alt="Mountain Logo" className="h-12"/>
 
                 {/* Mobile menu button */}
-                <button
-                    className="focus:outline-none"
+                <Button
+                    variant="ghost"
+                    size="icon"
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
                     <svg
@@ -42,7 +44,7 @@ const Header = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                         )}
                     </svg>
-                </button>
+                </Button>
             </div>
 
             {/* Mobile Navigation */}

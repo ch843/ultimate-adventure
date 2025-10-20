@@ -56,6 +56,35 @@ class _CardDetailsDAO {
     return data || [];
   }
 
+  public async createCardDetails(
+    cardId: number,
+    detailsData: Omit<Tables<'Card Details'>, 'details_id' | 'card_id'>
+  ): Promise<Tables<'Card Details'>> {
+    const { data, error } = await this.client
+      .from('Card Details')
+      .insert({ ...detailsData, card_id: cardId })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error creating card details:', error);
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: `Failed to create card details: ${error.message}`,
+        cause: error,
+      });
+    }
+
+    if (!data) {
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Failed to create card details: No data returned',
+      });
+    }
+
+    return data;
+  }
+
   public async updateCardDetails(
     id: number,
     updateData: Partial<Tables<'Card Details'>>

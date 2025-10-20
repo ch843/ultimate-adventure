@@ -12,7 +12,7 @@ const port = process.env.PORT || 3002;
 
 // Configure CORS
 app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:5174'],
+  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:5174', 'http://localhost:5173'],
   credentials: true,
 }));
 

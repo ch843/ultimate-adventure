@@ -18,6 +18,29 @@ export function useCardDetails(cardId: number) {
 }
 
 /**
+ * Hook to create card details
+ */
+export function useCreateCardDetails() {
+  const utils = trpc.useUtils();
+  const mutation = trpc.cardDetails.createCardDetails.useMutation({
+    onSuccess: (_, variables) => {
+      // Invalidate the specific card details query after creation
+      utils.cardDetails.getActivityDetails.invalidate({ cardId: variables.cardId });
+    },
+  });
+
+  return {
+    createCardDetails: mutation.mutate,
+    createCardDetailsAsync: mutation.mutateAsync,
+    isCreating: mutation.isPending,
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    error: mutation.error,
+    reset: mutation.reset,
+  };
+}
+
+/**
  * Hook to update card details
  */
 export function useUpdateCardDetails() {

@@ -1,7 +1,20 @@
-import { useState, useEffect } from 'react';
-import { useActivityCard } from '../../hooks/useActivityCards';
+import { useState } from 'react';
+import { useActivityCard, useDeleteActivityCard } from '../../hooks/useActivityCards';
 import { useCardDetails, useUpdateCardDetails } from '../../hooks/useCardDetails';
 import { useUpdateActivityCard } from '../../hooks/useActivityCards';
+import { Spinner } from '@/components/ui/spinner';
+import { Button } from '@ultimate-adventure/shared-components';
+import { AdventureForm, AdventureFormData } from './AdventureForm';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 interface EditCardFormProps {
   cardId: number;
@@ -14,98 +27,13 @@ const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
   const { cardDetails: details, isLoading: detailsLoading } = useCardDetails(cardId);
   const { updateActivityCard, isUpdating: isUpdatingCard } = useUpdateActivityCard();
   const { updateCardDetails, isUpdating: isUpdatingDetails } = useUpdateCardDetails();
+  const { deleteActivityCardAsync, isDeleting } = useDeleteActivityCard();
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const loading = cardLoading || detailsLoading;
   const saving = isUpdatingCard || isUpdatingDetails;
 
-  // Form state
-  const [formData, setFormData] = useState({
-    title: '',
-    location: '',
-    category: '',
-    img_link: '',
-    price_pp: '',
-    adult_price: '',
-    child_price: '',
-    half_day_pp: '',
-    full_day_pp: '',
-    min_people: '',
-    max_people: '',
-    hourly: false
-  });
-
-  const [detailsData, setDetailsData] = useState({
-    hype: '',
-    gear: '',
-    length: '',
-    season: '',
-    rating: '',
-    water: '',
-    flood_danger: '',
-    rappels: '',
-    notes: '',
-    maps: '',
-    gallery_img1: '',
-    gallery_img2: '',
-    gallery_img3: ''
-  });
-
-  // Populate form with existing data when card and details are loaded
-  useEffect(() => {
-    if (card) {
-      setFormData({
-        title: card.title || '',
-        location: card.location || '',
-        category: card.category || '',
-        img_link: card.img_link || '',
-        price_pp: card.price_pp?.toString() || '',
-        adult_price: card.adult_price?.toString() || '',
-        child_price: card.child_price?.toString() || '',
-        half_day_pp: card.half_day_pp?.toString() || '',
-        full_day_pp: card.full_day_pp?.toString() || '',
-        min_people: card.min_people?.toString() || '',
-        max_people: card.max_people?.toString() || '',
-        hourly: card.hourly || false
-      });
-    }
-  }, [card]);
-
-  useEffect(() => {
-    if (details) {
-      setDetailsData({
-        hype: details.hype || '',
-        gear: details.gear || '',
-        length: details.length || '',
-        season: details.season || '',
-        rating: details.rating || '',
-        water: details.water || '',
-        flood_danger: details.flood_danger || '',
-        rappels: details.rappels || '',
-        notes: details.notes || '',
-        maps: details.maps || '',
-        gallery_img1: details.gallery_img1 || '',
-        gallery_img2: details.gallery_img2 || '',
-        gallery_img3: details.gallery_img3 || ''
-      });
-    }
-  }, [details]);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target;
-    if (type === 'checkbox') {
-      const checked = (e.target as HTMLInputElement).checked;
-      setFormData(prev => ({ ...prev, [name]: checked }));
-    } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
-    }
-  };
-
-  const handleDetailsChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setDetailsData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSave = async () => {
+  const handleSubmit = async (value: AdventureFormData) => {
     if (!card) return;
 
     try {
@@ -114,18 +42,19 @@ const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
         {
           id: cardId,
           data: {
-            title: formData.title,
-            location: formData.location,
-            category: formData.category,
-            img_link: formData.img_link,
-            price_pp: formData.price_pp ? parseFloat(formData.price_pp) : null,
-            adult_price: formData.adult_price ? parseFloat(formData.adult_price) : null,
-            child_price: formData.child_price ? parseFloat(formData.child_price) : null,
-            half_day_pp: formData.half_day_pp ? parseFloat(formData.half_day_pp) : null,
-            full_day_pp: formData.full_day_pp ? parseFloat(formData.full_day_pp) : null,
-            min_people: formData.min_people ? parseInt(formData.min_people) : null,
-            max_people: formData.max_people ? parseInt(formData.max_people) : null,
-            hourly: formData.hourly
+            title: value.title,
+            location: value.location,
+            category: value.category,
+            img_link: value.img_link,
+            price_pp: value.price_pp ? parseFloat(value.price_pp) : null,
+            adult_price: value.adult_price ? parseFloat(value.adult_price) : null,
+            child_price: value.child_price ? parseFloat(value.child_price) : null,
+            half_day_pp: value.half_day_pp ? parseFloat(value.half_day_pp) : null,
+            full_day_pp: value.full_day_pp ? parseFloat(value.full_day_pp) : null,
+            min_people: value.min_people ? parseInt(value.min_people) : null,
+            max_people: value.max_people ? parseInt(value.max_people) : null,
+            hourly: value.hourly,
+            active: value.active
           }
         },
         {
@@ -141,7 +70,21 @@ const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
         await updateCardDetails(
           {
             cardId,
-            data: detailsData
+            data: {
+              hype: value.hype,
+              gear: value.gear,
+              length: value.length,
+              season: value.season,
+              rating: value.rating,
+              water: value.water,
+              flood_danger: value.flood_danger,
+              rappels: value.rappels,
+              notes: value.notes,
+              maps: value.maps,
+              gallery_img1: value.gallery_img1,
+              gallery_img2: value.gallery_img2,
+              gallery_img3: value.gallery_img3,
+            }
           },
           {
             onError: (error) => {
@@ -159,273 +102,91 @@ const EditCardForm = ({ cardId, onSave, onClose }: EditCardFormProps) => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      await deleteActivityCardAsync({ id: cardId });
+      onSave();
+      onClose();
+    } catch (error) {
+      console.error('Error deleting adventure:', error);
+      alert('Error deleting adventure. Please try again.');
+    }
+  };
+
   if (loading) {
-    return <div className="text-center py-8">Loading...</div>;
+    return (
+      <div className="flex flex-col items-center justify-center py-12">
+        <Spinner className="size-8" />
+        <p className="mt-4 text-muted-foreground">Loading adventure data...</p>
+      </div>
+    );
   }
+
+  const initialValues = {
+    title: card?.title || '',
+    location: card?.location || '',
+    category: card?.category || '',
+    img_link: card?.img_link || '',
+    price_pp: card?.price_pp?.toString() || '',
+    adult_price: card?.adult_price?.toString() || '',
+    child_price: card?.child_price?.toString() || '',
+    half_day_pp: card?.half_day_pp?.toString() || '',
+    full_day_pp: card?.full_day_pp?.toString() || '',
+    min_people: card?.min_people?.toString() || '',
+    max_people: card?.max_people?.toString() || '',
+    hourly: card?.hourly || false,
+    active: card?.active ?? true,
+    hype: details?.hype || '',
+    gear: details?.gear || '',
+    length: details?.length || '',
+    season: details?.season || '',
+    rating: details?.rating || '',
+    water: details?.water || '',
+    flood_danger: details?.flood_danger || '',
+    rappels: details?.rappels || '',
+    notes: details?.notes || '',
+    maps: details?.maps || '',
+    gallery_img1: details?.gallery_img1 || '',
+    gallery_img2: details?.gallery_img2 || '',
+    gallery_img3: details?.gallery_img3 || '',
+  };
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-6">Edit Adventure Card</h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Title
-          </label>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleInputChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Location
-          </label>
-          <input
-            type="text"
-            name="location"
-            value={formData.location}
-            onChange={handleInputChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Category
-          </label>
-          <select
-            name="category"
-            value={formData.category}
-            onChange={handleInputChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="">Select Category</option>
-            <option value="Canyoneering">Canyoneering</option>
-            <option value="Climbing">Climbing</option>
-            <option value="Rafting">Rafting</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Image Link
-          </label>
-          <input
-            type="url"
-            name="img_link"
-            value={formData.img_link}
-            onChange={handleInputChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Price Per Person
-          </label>
-          <input
-            type="number"
-            name="price_pp"
-            value={formData.price_pp}
-            onChange={handleInputChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Adult Price
-          </label>
-          <input
-            type="number"
-            name="adult_price"
-            value={formData.adult_price}
-            onChange={handleInputChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Child Price
-          </label>
-          <input
-            type="number"
-            name="child_price"
-            value={formData.child_price}
-            onChange={handleInputChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Half Day Price
-          </label>
-          <input
-            type="number"
-            name="half_day_pp"
-            value={formData.half_day_pp}
-            onChange={handleInputChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Full Day Price
-          </label>
-          <input
-            type="number"
-            name="full_day_pp"
-            value={formData.full_day_pp}
-            onChange={handleInputChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Min People
-          </label>
-          <input
-            type="number"
-            name="min_people"
-            value={formData.min_people}
-            onChange={handleInputChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Max People
-          </label>
-          <input
-            type="number"
-            name="max_people"
-            value={formData.max_people}
-            onChange={handleInputChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div className="md:col-span-2">
-          <label className="flex items-center">
-            <input
-              type="checkbox"
-              name="hourly"
-              checked={formData.hourly}
-              onChange={handleInputChange}
-              className="mr-2"
-            />
-            <span className="text-sm font-medium text-gray-700">Hourly Pricing</span>
-          </label>
-        </div>
-      </div>
-
-      <h3 className="text-xl font-bold mb-4">Card Details</h3>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Hype
-          </label>
-          <textarea
-            name="hype"
-            value={detailsData.hype}
-            onChange={handleDetailsChange}
-            rows={2}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Gear
-          </label>
-          <textarea
-            name="gear"
-            value={detailsData.gear}
-            onChange={handleDetailsChange}
-            rows={2}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Length
-          </label>
-          <input
-            type="text"
-            name="length"
-            value={detailsData.length}
-            onChange={handleDetailsChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Season
-          </label>
-          <input
-            type="text"
-            name="season"
-            value={detailsData.season}
-            onChange={handleDetailsChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Rating
-          </label>
-          <input
-            type="text"
-            name="rating"
-            value={detailsData.rating}
-            onChange={handleDetailsChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Water
-          </label>
-          <input
-            type="text"
-            name="water"
-            value={detailsData.water}
-            onChange={handleDetailsChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-          />
-        </div>
-      </div>
-
-      <div className="flex gap-4 justify-end">
-        <button
-          onClick={onClose}
-          className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold">Edit Adventure Card</h2>
+        <Button
+          variant="destructive"
+          onClick={() => setShowDeleteDialog(true)}
+          disabled={isDeleting}
         >
-          Cancel
-        </button>
-        <button
-          onClick={handleSave}
-          disabled={saving}
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
-        >
-          {saving ? 'Saving...' : 'Save Changes'}
-        </button>
+          {isDeleting ? 'Deleting...' : 'Delete'}
+        </Button>
       </div>
+      <AdventureForm
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        onCancel={onClose}
+        submitLabel="Save Changes"
+        isSubmitting={saving}
+      />
+
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete "{card?.title}". This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom";
+import { Button } from "@ultimate-adventure/shared-components";
 
 type HeroProps = {
     imgUrl: string;
@@ -26,9 +27,13 @@ const Hero = ({ imgUrl, ifMain = false, title }: HeroProps) => {
                   </p>
                   {ifMain &&
                       <Link to="/book">
-                          <button className="bg-transparent hover:bg-white/10 text-white my-3 py-2 px-4 md:py-3 md:px-10 rounded-md border-2 border-white text-lg sm:text-xl md:text-3xl">
+                          <Button
+                            variant="outline"
+                            size="lg"
+                            className="bg-transparent hover:bg-white/10 text-white my-3 border-2 border-white text-lg sm:text-xl md:text-3xl md:py-3 md:px-10"
+                          >
                             ADVENTURE STARTS HERE
-                          </button>
+                          </Button>
                       </Link>
                   }
               </div>

@@ -1,3 +1,5 @@
+import { Button } from "@ultimate-adventure/shared-components";
+
 const CallToAction = () => {
   return (
     <section className="relative py-20">
@@ -21,12 +23,12 @@ const CallToAction = () => {
             Our expert guides are ready to create an unforgettable experience for you.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-secondary hover:bg-secondary/90 text-white font-medium py-3 px-8 rounded-md text-lg">
+            <Button variant="secondary" size="lg" className="text-lg">
               Start Planning
-            </button>
-            <button className="bg-transparent hover:bg-white/10 text-white font-medium py-3 px-8 rounded-md border-2 border-white text-lg">
+            </Button>
+            <Button variant="outline" size="lg" className="bg-transparent hover:bg-white/10 text-white border-2 border-white text-lg">
               Contact Us
-            </button>
+            </Button>
           </div>
         </div>
       </div>

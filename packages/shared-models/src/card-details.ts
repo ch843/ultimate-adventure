@@ -35,6 +35,24 @@ export const GetActivityDetailsResponseSchema = z.object({
 
 export type GetActivityDetailsResponse = z.infer<typeof GetActivityDetailsResponseSchema>;
 
+export const CreateCardDetailsRequestSchema = z.object({
+  cardId: z.number(),
+  data: CardDetailsSchema.omit({ details_id: true, card_id: true }).extend({
+    location_id: z.number().nullable().optional(),
+    gallery_img1: z.string(),
+    gallery_img2: z.string(),
+    gallery_img3: z.string(),
+  }),
+});
+
+export type CreateCardDetailsRequest = z.infer<typeof CreateCardDetailsRequestSchema>;
+
+export const CreateCardDetailsResponseSchema = z.object({
+  details: CardDetailsSchema,
+});
+
+export type CreateCardDetailsResponse = z.infer<typeof CreateCardDetailsResponseSchema>;
+
 export const UpdateCardDetailsRequestSchema = z.object({
   cardId: z.number(),
   data: CardDetailsSchema.partial().omit({ details_id: true, card_id: true }),

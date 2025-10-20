@@ -3,8 +3,12 @@ import type {
   GetActivityCardResponse,
   GetAllActivityCardsRequest,
   GetAllActivityCardsResponse,
+  CreateActivityCardRequest,
+  CreateActivityCardResponse,
   UpdateActivityCardRequest,
   UpdateActivityCardResponse,
+  DeleteActivityCardRequest,
+  DeleteActivityCardResponse,
   AdventureCard,
 } from '@ultimate-adventure/shared-models';
 import {
@@ -31,8 +35,23 @@ export const activityCardService = {
     return { cards };
   },
 
+  async createActivityCard(request: CreateActivityCardRequest): Promise<CreateActivityCardResponse> {
+    const dbCard = await ActivityCardDAO.createActivityCard(request.data);
+
+    // Validate the response from DB with Zod
+    const card: AdventureCard = AdventureCardSchema.parse(dbCard);
+
+    return { card };
+  },
+
   async updateActivityCard(request: UpdateActivityCardRequest): Promise<UpdateActivityCardResponse> {
     await ActivityCardDAO.updateActivityCard(request.id, request.data);
+
+    return { success: true };
+  },
+
+  async deleteActivityCard(request: DeleteActivityCardRequest): Promise<DeleteActivityCardResponse> {
+    await ActivityCardDAO.deleteActivityCard(request.id);
 
     return { success: true };
   },

@@ -15,6 +15,7 @@ export const AdventureCardSchema = z.object({
   half_day_pp: z.number().nullable(),
   min_people: z.number().nullable(),
   max_people: z.number().nullable(),
+  active: z.boolean(),
   created_at: z.string(),
   updated_at: z.string().nullable(),
 });
@@ -44,6 +45,18 @@ export const GetAllActivityCardsResponseSchema = z.object({
 
 export type GetAllActivityCardsResponse = z.infer<typeof GetAllActivityCardsResponseSchema>;
 
+export const CreateActivityCardRequestSchema = z.object({
+  data: AdventureCardSchema.omit({ card_id: true, created_at: true, updated_at: true }),
+});
+
+export type CreateActivityCardRequest = z.infer<typeof CreateActivityCardRequestSchema>;
+
+export const CreateActivityCardResponseSchema = z.object({
+  card: AdventureCardSchema,
+});
+
+export type CreateActivityCardResponse = z.infer<typeof CreateActivityCardResponseSchema>;
+
 export const UpdateActivityCardRequestSchema = z.object({
   id: z.number(),
   data: AdventureCardSchema.partial().omit({ card_id: true, created_at: true }),
@@ -56,3 +69,15 @@ export const UpdateActivityCardResponseSchema = z.object({
 });
 
 export type UpdateActivityCardResponse = z.infer<typeof UpdateActivityCardResponseSchema>;
+
+export const DeleteActivityCardRequestSchema = z.object({
+  id: z.number(),
+});
+
+export type DeleteActivityCardRequest = z.infer<typeof DeleteActivityCardRequestSchema>;
+
+export const DeleteActivityCardResponseSchema = z.object({
+  success: z.boolean(),
+});
+
+export type DeleteActivityCardResponse = z.infer<typeof DeleteActivityCardResponseSchema>;

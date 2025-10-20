@@ -3,6 +3,19 @@ import { useState } from 'react';
 import { SubmitContactFormRequest } from '@ultimate-adventure/shared-models';
 import { useActivityCards } from '../../hooks/useActivityCards';
 import { useSubmitContactForm } from '../../hooks/useContactForm';
+import {
+  Button,
+  Input,
+  Textarea,
+  Label,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Alert,
+  AlertDescription,
+} from '@ultimate-adventure/shared-components';
 
 const formDataDefaults: SubmitContactFormRequest = {
   first_name: "",
@@ -53,22 +66,28 @@ const ContactForm = () => {
             <h2 className="text-5xl font-light mb-8 text-center">CONTACT US</h2>
 
             {isSuccess && (
-              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                Thank you for your message! We'll be in touch soon.
-              </div>
+              <Alert className="bg-green-100 border-green-400 text-green-700 mb-4">
+                <AlertDescription>
+                  Thank you for your message! We'll be in touch soon.
+                </AlertDescription>
+              </Alert>
             )}
 
             {isError && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                {error?.message || 'Failed to submit form. Please try again later.'}
-              </div>
+              <Alert variant="destructive" className="mb-4">
+                <AlertDescription>
+                  {error?.message || 'Failed to submit form. Please try again later.'}
+                </AlertDescription>
+              </Alert>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name <span className="text-red-500">*</span></label>
-                  <input
+                <div className="space-y-2">
+                  <Label htmlFor="firstName">
+                    First Name <span className="text-destructive">*</span>
+                  </Label>
+                  <Input
                     id="firstName"
                     name="firstName"
                     type="text"
@@ -80,13 +99,14 @@ const ContactForm = () => {
                         ...prev,
                         first_name: newVal
                       }))}}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                   />
                 </div>
 
-                <div>
-                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Last Name <span className="text-red-500">*</span></label>
-                  <input
+                <div className="space-y-2">
+                  <Label htmlFor="lastName">
+                    Last Name <span className="text-destructive">*</span>
+                  </Label>
+                  <Input
                     id="lastName"
                     name="lastName"
                     type="text"
@@ -98,14 +118,15 @@ const ContactForm = () => {
                         ...prev,
                         last_name: newVal
                       }))}}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                   />
                 </div>
               </div>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email <span className="text-red-500">*</span></label>
-                <input
+              <div className="space-y-2">
+                <Label htmlFor="email">
+                  Email <span className="text-destructive">*</span>
+                </Label>
+                <Input
                   id="email"
                   name="email"
                   type="email"
@@ -117,13 +138,12 @@ const ContactForm = () => {
                       ...prev,
                       email: newVal
                     }))}}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                 />
               </div>
 
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone (Optional)</label>
-                <input
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone (Optional)</Label>
+                <Input
                   id="phone"
                   name="phone"
                   type="tel"
@@ -134,34 +154,37 @@ const ContactForm = () => {
                       ...prev,
                       phone: newVal
                     }))}}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                 />
               </div>
 
-              <div>
-                <label htmlFor="activityType" className="block text-sm font-medium text-gray-700">Activity Type (Optional)</label>
-                <select
-                  id="activityType"
-                  name="activityType"
-                  value={formData.activity_inquiry_id ?? 0}
-                  onChange={(e) => {
-                    const newVal = e.target.value;
+              <div className="space-y-2">
+                <Label htmlFor="activityType">Activity Type (Optional)</Label>
+                <Select
+                  value={formData.activity_inquiry_id?.toString()}
+                  onValueChange={(value) => {
                     setFormData((prev) => ({
                       ...prev,
-                      activity_inquiry_id: Number(newVal)
+                      activity_inquiry_id: value ? Number(value) : null
                     }))}}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                 >
-                  <option selected value="">Choose an activity...</option>
-                  {activityCards.map((activity) => (
-                      <option key={activity.card_id} value={activity.card_id} className="uppercase">{activity.title}</option>
-                  ))}
-                </select>
+                  <SelectTrigger id="activityType">
+                    <SelectValue placeholder="Choose an activity..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {activityCards.map((activity) => (
+                      <SelectItem key={activity.card_id} value={activity.card_id.toString()}>
+                        {activity.title.toUpperCase()}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message <span className="text-red-500">*</span></label>
-                <textarea
+              <div className="space-y-2">
+                <Label htmlFor="message">
+                  Message <span className="text-destructive">*</span>
+                </Label>
+                <Textarea
                   id="message"
                   name="message"
                   rows={4}
@@ -173,20 +196,18 @@ const ContactForm = () => {
                       ...prev,
                       message: newVal
                     }))}}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
                   placeholder="Tell us about your inquiry or what you're interested in booking..."
-                ></textarea>
+                />
               </div>
 
-              <div>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors"
-                >
-                  {isSubmitting ? 'Submitting...' : 'Submit'}
-                </button>
-              </div>
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full"
+                size="lg"
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit'}
+              </Button>
             </form>
           </div>
         </div>

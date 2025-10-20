@@ -56,6 +56,34 @@ class _ActivityCardDAO {
     return data || [];
   }
 
+  public async createActivityCard(
+    cardData: Omit<Tables<'Adventure Cards'>, 'card_id' | 'created_at' | 'updated_at'>
+  ): Promise<Tables<'Adventure Cards'>> {
+    const { data, error } = await this.client
+      .from('Adventure Cards')
+      .insert({ ...cardData, active: true })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error creating activity card:', error);
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: `Failed to create activity card: ${error.message}`,
+        cause: error,
+      });
+    }
+
+    if (!data) {
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Failed to create activity card: No data returned',
+      });
+    }
+
+    return data;
+  }
+
   public async updateActivityCard(
     id: number,
     updateData: Partial<Tables<'Adventure Cards'>>
@@ -70,6 +98,22 @@ class _ActivityCardDAO {
       throw new TRPCError({
         code: 'INTERNAL_SERVER_ERROR',
         message: `Failed to update activity card: ${error.message}`,
+        cause: error,
+      });
+    }
+  }
+
+  public async deleteActivityCard(id: number): Promise<void> {
+    const { error } = await this.client
+      .from('Adventure Cards')
+      .delete()
+      .eq('card_id', id);
+
+    if (error) {
+      console.error('Error deleting activity card:', error);
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: `Failed to delete activity card: ${error.message}`,
         cause: error,
       });
     }
