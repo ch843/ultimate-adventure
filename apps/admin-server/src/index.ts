@@ -9,6 +9,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3002;
+const nodeEnv = process.env.NODE_ENV || "development";
 
 // Configure CORS
 app.use(
@@ -35,9 +36,17 @@ app.use(
   }),
 );
 
-app.listen(port, () => {
-  console.log(`✓ Admin server listening on port ${port}`);
-  console.log(`✓ Health check: http://localhost:${port}/health`);
-  console.log(`✓ tRPC endpoints available at http://localhost:${port}/trpc`);
-  console.log(`  - adventure: getAdventure, listAdventures, createAdventure`);
-});
+// For local development, start the server
+// For production (Vercel), just export the app
+if (nodeEnv !== "production") {
+  app.listen(port, () => {
+    console.log(`✓ Admin server listening on port ${port}`);
+    console.log(`✓ Environment: ${nodeEnv}`);
+    console.log(`✓ Health check: http://localhost:${port}/health`);
+    console.log(`✓ tRPC endpoints available at http://localhost:${port}/trpc`);
+    console.log(`  - adventure: getAdventure, listAdventures, createAdventure`);
+  });
+}
+
+// Export for Vercel serverless
+export default app;
