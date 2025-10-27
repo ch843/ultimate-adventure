@@ -1,6 +1,6 @@
 import { router, publicProcedure } from "@ultimate-adventure/backend-utils";
 import { SubmitContactFormRequestSchema } from "@ultimate-adventure/shared-models";
-import { contactFormService } from "../services/contact-form.service";
+import { contactFormService } from "../services/contact-form.service.js";
 
 export const contactFormRouter = router({
   submit: publicProcedure

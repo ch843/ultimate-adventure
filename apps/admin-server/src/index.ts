@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import { createContext } from "@ultimate-adventure/backend-utils";
-import { appRouter } from "./trpc";
+import { appRouter } from "./trpc.js";
 import dotenv from "dotenv";
 
 dotenv.config();

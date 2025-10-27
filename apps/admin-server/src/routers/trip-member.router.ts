@@ -8,7 +8,7 @@ import {
   UpdateTripMemberRequestSchema,
   DeleteTripMemberRequestSchema,
 } from "@ultimate-adventure/shared-models";
-import { tripMemberService } from "../services/trip-member.service";
+import { tripMemberService } from "../services/trip-member.service.js";
 
 export const tripMemberRouter = router({
   getTripMember: publicProcedure

@@ -4,7 +4,7 @@ import {
   ListAdventuresRequestSchema,
   CreateAdventureRequestSchema,
 } from "@ultimate-adventure/shared-models";
-import { adventureService } from "../services/adventure.service";
+import { adventureService } from "../services/adventure.service.js";
 
 export const adventureRouter = router({
   getAdventure: publicProcedure

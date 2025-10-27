@@ -3,7 +3,7 @@ import {
   GetActivityDetailsRequestSchema,
   UpdateCardDetailsRequestSchema,
 } from "@ultimate-adventure/shared-models";
-import { cardDetailsService } from "../services/card-details.service";
+import { cardDetailsService } from "../services/card-details.service.js";
 
 export const cardDetailsRouter = router({
   getActivityDetails: publicProcedure

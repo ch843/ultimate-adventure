@@ -6,7 +6,7 @@ import {
   UpdateActivityCardRequestSchema,
   DeleteActivityCardRequestSchema,
 } from "@ultimate-adventure/shared-models";
-import { activityCardService } from "../services/activity-card.service";
+import { activityCardService } from "../services/activity-card.service.js";
 
 export const activityCardRouter = router({
   getActivityCard: publicProcedure

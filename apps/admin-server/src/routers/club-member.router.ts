@@ -6,7 +6,7 @@ import {
   UpdateClubMemberRequestSchema,
   DeleteClubMemberRequestSchema,
 } from "@ultimate-adventure/shared-models";
-import { clubMemberService } from "../services/club-member.service";
+import { clubMemberService } from "../services/club-member.service.js";
 
 export const clubMemberRouter = router({
   getClubMember: publicProcedure
