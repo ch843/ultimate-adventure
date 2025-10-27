@@ -13,7 +13,7 @@ function Root() {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: import.meta.env.VITE_API_URL || "http://localhost:3001/trpc",
+          url: import.meta.env.VITE_API_URL || "https://web-server.ultimateadventureguides.com/trpc",
         }),
       ],
     }),
