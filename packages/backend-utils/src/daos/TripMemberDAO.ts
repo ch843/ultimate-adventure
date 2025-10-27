@@ -1,4 +1,4 @@
-import { BaseDAO } from "./BaseDAO";
+import { BaseDAO } from "./BaseDAO.js";
 import type { Tables } from "@ultimate-adventure/shared-models";
 
 class _TripMemberDAO extends BaseDAO<"Trip Members"> {

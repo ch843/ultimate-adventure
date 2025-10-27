@@ -1,4 +1,4 @@
-import { getSupabaseClient } from "../supabase-client";
+import { getSupabaseClient } from "../supabase-client.js";
 import type { Tables } from "@ultimate-adventure/shared-models";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { TRPCError } from "@trpc/server";

@@ -1,4 +1,4 @@
-import { getSupabaseClient } from "../supabase-client";
+import { getSupabaseClient } from "../supabase-client.js";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { TRPCError } from "@trpc/server";
 
