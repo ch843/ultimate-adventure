@@ -1,15 +1,15 @@
 // Backend-specific utilities
 // Export your backend utilities here
 
-export * from "./validation";
-export * from "./trpc";
-export * from "./supabase-client";
+export * from "./validation.js";
+export * from "./trpc.js";
+export * from "./supabase-client.js";
 
 // Export DAOs
-export * from "./daos/BaseDAO";
-export * from "./daos/ActivityCardDAO";
-export * from "./daos/CardDetailsDAO";
-export * from "./daos/ContactFormDAO";
-export * from "./daos/ClubMemberDAO";
-export * from "./daos/TripDAO";
-export * from "./daos/TripMemberDAO";
+export * from "./daos/BaseDAO.js";
+export * from "./daos/ActivityCardDAO.js";
+export * from "./daos/CardDetailsDAO.js";
+export * from "./daos/ContactFormDAO.js";
+export * from "./daos/ClubMemberDAO.js";
+export * from "./daos/TripDAO.js";
+export * from "./daos/TripMemberDAO.js";
