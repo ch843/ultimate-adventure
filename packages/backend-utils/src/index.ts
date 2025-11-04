@@ -13,3 +13,4 @@ export * from "./daos/ContactFormDAO.js";
 export * from "./daos/ClubMemberDAO.js";
 export * from "./daos/TripDAO.js";
 export * from "./daos/TripMemberDAO.js";
+export * from "./daos/ReviewsDAO.js"
