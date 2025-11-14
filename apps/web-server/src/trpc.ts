@@ -3,6 +3,7 @@ import { adventureRouter } from "./routers/adventure.router.js";
 import { activityCardRouter } from "./routers/activity-card.router.js";
 import { cardDetailsRouter } from "./routers/card-details.router.js";
 import { contactFormRouter } from "./routers/contact-form.router.js";
+import { reviewRouter } from "./routers/reviews.router.js";
 
 /**
  * Main app router that combines all sub-routers
@@ -12,6 +13,7 @@ export const appRouter = router({
   activityCard: activityCardRouter,
   cardDetails: cardDetailsRouter,
   contactForm: contactFormRouter,
+  reviews: reviewRouter,
 });
 
 export type AppRouter = typeof appRouter;

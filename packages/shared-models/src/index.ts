@@ -8,4 +8,5 @@ export * from "./contact-form.js";
 export * from "./club-member.js";
 export * from "./trip.js";
 export * from "./trip-member.js";
+export * from "./reviews.js"
 export * from "./database-types.js";
