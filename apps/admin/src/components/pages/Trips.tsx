@@ -4,19 +4,30 @@ import {
   Button,
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
 } from "@ultimate-adventure/shared-components";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
-import { Pencil, Trash2, Eye, Search } from "lucide-react";
+  useReactTable,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  type ColumnDef,
+  type FilterFn,
+} from "@tanstack/react-table";
+import {
+  DataTable,
+  DataTableColumnHeader,
+  DataTablePagination,
+  DataTableSearch,
+  DataTableToolbar,
+  DataTableViewOptions,
+} from "@/components/ui/data-table";
+import {
+  DataTableAddFilter,
+  DataTableActiveFilters,
+  type FilterDefinition,
+} from "@/components/ui/data-table-filters";
+import { Pencil, Trash2, Eye, MapPin, Calendar, Users, Type } from "lucide-react";
 import {
   useTrips,
   useDeleteTrip,
@@ -38,6 +49,70 @@ import {
 import { FormDialog } from "../dialogs/FormDialog";
 import { TripForm, type TripFormData } from "../forms/TripForm";
 import type { Trip } from "@ultimate-adventure/shared-models";
+import { formatDate } from "../../utils/dates";
+import { useTableUrlState } from "../../hooks/useTableUrlState";
+
+// Filter definitions for the trips table
+const tripFilterDefinitions: FilterDefinition[] = [
+  {
+    id: "title",
+    label: "Title",
+    type: "text",
+    icon: Type,
+  },
+  {
+    id: "location",
+    label: "Location",
+    type: "text",
+    icon: MapPin,
+  },
+  {
+    id: "date_start",
+    label: "Start Date",
+    type: "date",
+    icon: Calendar,
+  },
+  {
+    id: "date_end",
+    label: "End Date",
+    type: "date",
+    icon: Calendar,
+  },
+  {
+    id: "group_num",
+    label: "Group",
+    type: "select",
+    icon: Users,
+    options: [
+      { label: "Group 1", value: "1" },
+      { label: "Group 2", value: "2" },
+      { label: "Group 3", value: "3" },
+      { label: "Group 4", value: "4" },
+      { label: "Group 5", value: "5" },
+    ],
+  },
+];
+
+// Custom filter function for date range filtering
+const dateRangeFilterFn: FilterFn<Trip> = (row, columnId, filterValue) => {
+  const dateValue = row.getValue(columnId) as string;
+  const { from, to } = filterValue as { from?: string; to?: string };
+
+  if (!from && !to) return true;
+
+  const cellDate = new Date(dateValue);
+  if (from && cellDate < new Date(from)) return false;
+  if (to && cellDate > new Date(to)) return false;
+
+  return true;
+};
+
+// Custom filter function for select (array) filtering
+const selectFilterFn: FilterFn<Trip> = (row, columnId, filterValue) => {
+  const cellValue = String(row.getValue(columnId));
+  const selectedValues = filterValue as string[];
+  return selectedValues.includes(cellValue);
+};
 
 const Trips = () => {
   const navigate = useNavigate();
@@ -52,7 +127,18 @@ const Trips = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editingTrip, setEditingTrip] = useState<Trip | null>(null);
   const [addDialogOpen, setAddDialogOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const {
+    sorting,
+    columnFilters,
+    globalFilter,
+    pagination,
+    onSortingChange,
+    onColumnFiltersChange,
+    onGlobalFilterChange,
+    onPaginationChange,
+  } = useTableUrlState({
+    defaultSorting: [{ id: "date_start", desc: false }],
+  });
   const editFormRef = useRef<HTMLFormElement>(null);
   const addFormRef = useRef<HTMLFormElement>(null);
 
@@ -114,7 +200,8 @@ const Trips = () => {
     }
   };
 
-  const handleDeleteClick = (tripId: number) => {
+  const handleDeleteClick = (tripId: number, e?: React.MouseEvent) => {
+    e?.stopPropagation();
     setDeletingTripId(tripId);
     setDeleteDialogOpen(true);
   };
@@ -135,37 +222,119 @@ const Trips = () => {
 
   const deletingTrip = trips.find((t) => t.id === deletingTripId);
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-  };
+  const columns: ColumnDef<Trip>[] = useMemo(
+    () => [
+      {
+        accessorKey: "title",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Title" />
+        ),
+        cell: ({ row }) => (
+          <span className="font-medium text-foreground">{row.getValue("title")}</span>
+        ),
+      },
+      {
+        accessorKey: "location",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Location" />
+        ),
+        cell: ({ row }) => (
+          <span className="text-foreground">
+            {row.getValue("location")}
+          </span>
+        ),
+      },
+      {
+        accessorKey: "date_start",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Start Date" />
+        ),
+        cell: ({ row }) => (
+          <span className="text-foreground">{formatDate(row.getValue("date_start"))}</span>
+        ),
+        filterFn: dateRangeFilterFn,
+      },
+      {
+        accessorKey: "date_end",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="End Date" />
+        ),
+        cell: ({ row }) => (
+          <span className="text-foreground">{formatDate(row.getValue("date_end"))}</span>
+        ),
+        filterFn: dateRangeFilterFn,
+      },
+      {
+        accessorKey: "group_num",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Group" />
+        ),
+        cell: ({ row }) => (
+          <span className="text-foreground">Group {row.getValue("group_num")}</span>
+        ),
+        filterFn: selectFilterFn,
+      },
+      {
+        id: "actions",
+        header: () => <div className="text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">Actions</div>,
+        cell: ({ row }) => {
+          const trip = row.original;
+          return (
+            <div
+              className="flex items-center justify-end gap-2"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleViewTrip(trip.id)}
+              >
+                <Eye className="size-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={(e) => handleEditClick(trip, e)}
+              >
+                <Pencil className="size-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={(e) => handleDeleteClick(trip.id, e)}
+                disabled={isDeleting}
+              >
+                <Trash2 className="size-4 text-destructive" />
+              </Button>
+            </div>
+          );
+        },
+        enableSorting: false,
+        enableHiding: false,
+      },
+    ],
+    [isDeleting],
+  );
 
-  // Filter trips based on search query
-  const filteredTrips = useMemo(() => {
-    if (!searchQuery.trim()) {
-      return trips;
-    }
-
-    const query = searchQuery.toLowerCase();
-    return trips.filter((trip) => {
-      const title = trip.title.toLowerCase();
-      const location = trip.location.toLowerCase();
-      const groupNum = trip.group_num.toString();
-      const startDate = formatDate(trip.date_start).toLowerCase();
-      const endDate = formatDate(trip.date_end).toLowerCase();
-
-      return (
-        title.includes(query) ||
-        location.includes(query) ||
-        groupNum.includes(query) ||
-        startDate.includes(query) ||
-        endDate.includes(query)
-      );
-    });
-  }, [trips, searchQuery]);
+  const table = useReactTable({
+    data: trips,
+    columns,
+    state: {
+      sorting,
+      columnFilters,
+      globalFilter,
+      pagination,
+    },
+    onSortingChange,
+    onColumnFiltersChange,
+    onGlobalFilterChange,
+    onPaginationChange,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    manualPagination: false,
+  });
 
   return (
     <div className="container mx-auto py-8 px-4 max-w-7xl">
@@ -181,119 +350,29 @@ const Trips = () => {
         </Button>
       </div>
 
-      {isLoading ? (
+      {trips.length === 0 && !isLoading ? (
         <Card>
-          <CardContent className="py-8">
-            <p className="text-center text-muted-foreground">
-              Loading trips...
-            </p>
+          <CardContent className="py-12 text-center">
+            <p className="text-muted-foreground mb-4">No trips yet</p>
+            <Button variant="outline" onClick={() => setAddDialogOpen(true)}>
+              Create Your First Trip
+            </Button>
           </CardContent>
         </Card>
       ) : (
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle>
-                All Trips ({filteredTrips.length}
-                {searchQuery && ` of ${trips.length}`})
-              </CardTitle>
-              <div className="relative w-64">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  placeholder="Search trips..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9"
-                />
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="px-6">
-            {trips.length === 0 ? (
-              <div className="py-12 text-center">
-                <p className="text-muted-foreground mb-4">No trips yet</p>
-                <Button
-                  variant="outline"
-                  onClick={() => setAddDialogOpen(true)}
-                >
-                  Create Your First Trip
-                </Button>
-              </div>
-            ) : filteredTrips.length === 0 ? (
-              <div className="py-12 text-center">
-                <Search className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-                <p className="text-muted-foreground mb-2">No trips found</p>
-                <p className="text-sm text-muted-foreground">
-                  Try adjusting your search query
-                </p>
-              </div>
-            ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Title</TableHead>
-                    <TableHead>Location</TableHead>
-                    <TableHead>Start Date</TableHead>
-                    <TableHead>End Date</TableHead>
-                    <TableHead>Group</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredTrips.map((trip) => (
-                    <TableRow
-                      key={trip.id}
-                      className="cursor-pointer hover:bg-muted/50"
-                      onClick={() => handleViewTrip(trip.id)}
-                    >
-                      <TableCell className="font-medium">
-                        {trip.title}
-                      </TableCell>
-                      <TableCell className="text-muted-foreground">
-                        {trip.location}
-                      </TableCell>
-                      <TableCell>{formatDate(trip.date_start)}</TableCell>
-                      <TableCell>{formatDate(trip.date_end)}</TableCell>
-                      <TableCell>Group {trip.group_num}</TableCell>
-                      <TableCell className="text-right">
-                        <div
-                          className="flex items-center justify-end gap-2"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleViewTrip(trip.id)}
-                          >
-                            <Eye className="size-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={(e) => handleEditClick(trip, e)}
-                          >
-                            <Pencil className="size-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDeleteClick(trip.id);
-                            }}
-                            disabled={isDeleting}
-                          >
-                            <Trash2 className="size-4 text-destructive" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
-          </CardContent>
-        </Card>
+        <DataTable
+          table={table}
+          loading={isLoading}
+          onRowClick={({ row }) => handleViewTrip(row.id)}
+        >
+          <DataTableToolbar>
+            <DataTableSearch />
+            <DataTableAddFilter filters={tripFilterDefinitions} />
+            <DataTableActiveFilters filters={tripFilterDefinitions} />
+            <DataTableViewOptions />
+          </DataTableToolbar>
+          <DataTablePagination />
+        </DataTable>
       )}
 
       <FormDialog

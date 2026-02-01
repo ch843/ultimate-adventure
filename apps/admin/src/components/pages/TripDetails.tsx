@@ -24,6 +24,7 @@ import {
 } from "../../hooks/useTripMembers";
 import { useClubMembers } from "../../hooks/useClubMembers";
 import { Spinner } from "@/components/ui/spinner";
+import { formatDateLong } from "../../utils/dates";
 import { FormDialog } from "../dialogs/FormDialog";
 import { TripForm, type TripFormData } from "../forms/TripForm";
 import {
@@ -153,15 +154,6 @@ const TripDetails = () => {
     (m) => m.tripMemberId === removingMemberId,
   );
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    });
-  };
-
   if (isLoading) {
     return (
       <div className="container mx-auto py-8 px-4 max-w-7xl">
@@ -232,13 +224,13 @@ const TripDetails = () => {
                     <p className="text-sm text-muted-foreground mb-1">
                       Start Date
                     </p>
-                    <p className="font-medium">{formatDate(trip.date_start)}</p>
+                    <p className="font-medium">{formatDateLong(trip.date_start)}</p>
                   </div>
                   <div className="p-4 bg-muted/30 rounded-lg">
                     <p className="text-sm text-muted-foreground mb-1">
                       End Date
                     </p>
-                    <p className="font-medium">{formatDate(trip.date_end)}</p>
+                    <p className="font-medium">{formatDateLong(trip.date_end)}</p>
                   </div>
                 </div>
               </div>
